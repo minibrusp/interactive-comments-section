@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
@@ -24,11 +25,20 @@ export default {
       fontFamily: {
         rubik: [ 'Rubik', 'sans-serif' ]
       },
-      screens: {
-        'mobile': '375px',
-        'desktop': '1440px'
+      gridTemplateAreas: {
+        'comment-slim': [
+          'header header header',
+          'content content content',
+          'votes blank replybtn'
+        ],
+        'form-slim': [
+          'text text text',
+          'profile blank submitBtn'
+        ]
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('@savvywombat/tailwindcss-grid-areas'),
+  ],
 }

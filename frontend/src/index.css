@@ -7,3 +7,16 @@
 *, *::before, *::after {
   box-sizing: border-box;
 }
+
+@layer {
+  :root {
+    --tabsize: 3rem
+  }
+
+  body {
+    @apply
+    m-0
+    p-0
+    bg-neutral-very-light-gray
+  }
+}

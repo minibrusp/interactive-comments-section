@@ -1,14 +1,25 @@
-import iconReply from './assets/images/icon-reply.svg'
+
+
+// components 
+import CommentContainer from "./components/CommentContainer"
+import CommentForm from "./components/CommentForm"
+// import Modal from "./components/Modal"
+
 
 function App() {
+  
+  
 
   return (
-    <div className='font-rubik'>
-      <h1 className=" text-cyan-600 text-lg font-bold">HEllo</h1>
-      <img src={iconReply} alt="123123" />
-      <p className=' text-primary-moderate-blue m-4'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere quidem totam excepturi reprehenderit repellendus, eius animi similique nulla amet voluptatum? Omnis, esse. Repellendus tempora eveniet libero odit. Qui iste quis vitae magnam, ad praesentium cumque unde aliquam necessitatibus soluta molestias omnis optio ipsa, minima reprehenderit non amet nulla earum itaque.</p>
-    </div>
+    // when modal open max-height 100vh overflow hidden
+    <section className='font-rubik text-neutral-grayish-blue'>
+      <CommentContainer />
+      <CommentForm btnText="send" placeholder="Add a comment..." />
+      {/* <Modal /> */}
+    </section>
   )
+
+
 }
 
 export default App
