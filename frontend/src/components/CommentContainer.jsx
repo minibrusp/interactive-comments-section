@@ -1,20 +1,28 @@
-import { useEffect } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { memo, useEffect } from "react";
 import useCommentContext from "../hooks/useCommentContext";
 
 import Comment from "./Comment";
 import RepliesContainer from "./RepliesContainer";
 
-export default function CommentContainer() {
+const CommentContainer = () => {
   const { comments, dispatch } = useCommentContext()
+
+  console.log('COmment container: rendered')
   
   useEffect(() => {
     const fetchComments = async () => {
-      const response = await fetch('http://localhost:3000/comments')
-      const json = await response.json()
-
-      if(response.ok) {
-        dispatch({ type: 'SET_COMMENTS', payload: json})
+      try {
+        const response = await fetch('http://localhost:3000/comments')
+        const json = await response.json()
+        if(response.ok) {
+          dispatch({ type: 'SET_COMMENTS', payload: json})
+        }
+      } catch(err) {
+        throw Error("Could not connect to the API")
       }
+
+      
 
     }
 
@@ -26,7 +34,7 @@ export default function CommentContainer() {
   return (
     <div className="comment__container m-4 mb-4 relative overflow-hidden">
       { comments && 
-          comments.map(comment => (
+          comments.map((comment) => (
             <div key={comment.id}>
               <Comment 
                 key={comment.id}
@@ -35,7 +43,7 @@ export default function CommentContainer() {
                 createdAt={comment.createdAt}
                 score={comment.score}
                 user={comment.user}
-                replies={comment.replies} 
+                replies={comment.replies}
               />
               <RepliesContainer key={comment.content} replies={comment.replies}/>
             </div>
@@ -45,3 +53,6 @@ export default function CommentContainer() {
     </div>
   )
 }
+
+// export default memo(CommentContainer)
+export default CommentContainer

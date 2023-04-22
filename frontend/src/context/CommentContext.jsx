@@ -14,6 +14,50 @@ export const commentsReducer = (state, action) => {
       return {
         comments: [...state.comments, action.payload]
       }
+    case 'EDIT_COMMENT':
+      return {
+        comments: [...state.comments.map(comment => {
+          if(comment.id === action.payload.id) {
+            return {
+              ...comment,
+              content: action.payload.content
+            }
+          } 
+          return {...comment}
+        })]
+      }
+    case 'DELETE_COMMENT':
+      return {
+        comments: [
+          ...state.comments.filter(comment => {
+            return comment.id !== action.payload.id
+          })
+        ]
+      }
+    case 'UPVOTE_COMMENT':
+      return {
+        comments: [...state.comments.map(comment => {
+          if(comment.id === action.payload.id) {
+            return {
+              ...comment,
+              score: comment.score + 1
+            }
+          }
+          return {...comment} 
+        })]
+      }
+    case 'DOWNVOTE_COMMENT':
+      return {
+        comments: [...state.comments.map(comment => {
+          if(comment.id === action.payload.id) {
+            return {
+              ...comment,
+              score: comment.score - 1
+            }
+          }
+          return {...comment} 
+        })]
+      }
     default:
       return state
   }

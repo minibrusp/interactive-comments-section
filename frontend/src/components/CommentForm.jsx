@@ -1,13 +1,13 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 import  useUserContext  from '../hooks/useUserContext'
-import useCreateComment from '../hooks/useCreateComment'
+import useComment from '../hooks/useComment'
 
 export default function CommentForm({ placeholder, btnText }) {
 
   const { currentUser } = useUserContext()
   const [ comment, SetComment ] = useState('')
-  const { createComment } = useCreateComment()
+  const { createComment } = useComment()
 
   const handleSubmit = (e) => {
     e.preventDefault()
