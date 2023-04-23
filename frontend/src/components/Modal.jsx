@@ -6,7 +6,13 @@ import useModalContext from "../hooks/useModalContext"
 export default function Modal() {
 
   const { closeModal, modalDeleteConfirm } = useModal()
-  const { targetComment } = useModalContext()
+  const { targetComment} = useModalContext()
+
+  const handleClick = () => {
+
+    modalDeleteConfirm(targetComment)
+
+  }
 
   return (
     <div className='delete-modal__container bg-neutral-dark-blue/40 min-h-screen w-full flex items-center justify-center fixed z-10 top-0 left-0'>
@@ -22,7 +28,7 @@ export default function Modal() {
           </button>
           <button 
             className='delete-modal__cta__approve text-base font-medium uppercase text-neutral-white bg-primary-soft-red rounded-lg py-3 px-4'
-            onClick={() => modalDeleteConfirm(targetComment)}
+            onClick={handleClick}
           >
             yes, delete
           </button>

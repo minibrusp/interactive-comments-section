@@ -58,6 +58,107 @@ export const commentsReducer = (state, action) => {
           return {...comment} 
         })]
       }
+    case 'REPLY_COMMENT':
+      return {
+        comments: [...state.comments.map(comment => {
+          if(comment.id === action.payload.id) {
+            return {
+              ...comment,
+              replies: [ ...comment.replies, action.payload.reply ]
+            }
+          }
+          return {...comment} 
+        })]
+      }
+    case 'EDIT_REPLY':
+      return {
+        comments: [...state.comments.map(comment => {
+          if(comment.id === action.payload.id) {
+            return {
+              ...comment,
+              replies: [ ...comment.replies.map(reply => {
+                if(reply.id === action.payload.replyId) {
+                  return {
+                    ...reply,
+                    content: action.payload.content
+                  }
+                }
+                return {...reply}
+              }) ]
+            }
+          } 
+          return {...comment}
+        })]
+      }
+    case 'DELETE_REPLY':
+      return {
+        comments: [...state.comments.map(comment => {
+          if(comment.id === action.payload.id) {
+            return {
+              ...comment,
+              replies: [ ...comment.replies.filter(reply => {
+                return reply.id !== action.payload.replyId
+
+              }) ]
+            }
+          } 
+          return {...comment}
+        })]
+      }
+      case 'UPVOTE_REPLY':
+        return {
+          comments: [...state.comments.map(comment => {
+            if(comment.id === action.payload.id) {
+              return {
+                ...comment,
+                replies: [ ...comment.replies.map(reply => {
+                  if(reply.id === action.payload.replyId) {
+                    return {
+                      ...reply,
+                      score: reply.score + 1
+                    }
+                  }
+                  return {...reply}
+                }) ]
+              }
+            } 
+            return {...comment}
+          })]
+        }
+      case 'DOWNVOTE_REPLY':
+        return {
+          comments: [...state.comments.map(comment => {
+            if(comment.id === action.payload.id) {
+              return {
+                ...comment,
+                replies: [ ...comment.replies.map(reply => {
+                  if(reply.id === action.payload.replyId) {
+                    return {
+                      ...reply,
+                      score: reply.score - 1
+                    }
+                  }
+                  return {...reply}
+                }) ]
+              }
+            } 
+            return {...comment}
+          })]
+        }
+      case 'REPLY_REPLY':
+        return {
+          comments: [...state.comments.map(comment => {
+            if(comment.id === action.payload.id) {
+              return {
+                ...comment,
+                replies: [ ...comment.replies, action.payload.reply ]
+              }
+            }
+            return {...comment} 
+          })]
+        }
+
+
     default:
       return state
   }

@@ -33,9 +33,9 @@ const avatars = new Map([
   ['ramsesmiron', avatarRam],
 ])
 
-export default function Comment({id, content, createdAt, score, user, replies, replyingTo}) {
+export default function Comment({id, commentThreadId, content, createdAt, score, user, replies, replyingTo}) {
   const { currentUser } = useUserContext()
-  const { changeComment, deleteComment, upvoteComment, downvoteComment } = useComment()
+  const { changeComment, upvoteComment, downvoteComment, editReply, upvoteReply, downvoteReply } = useComment()
   const { openModal } = useModal()
 
   const [isReplying, setIsReplying] = useState(false)
@@ -50,25 +50,54 @@ export default function Comment({id, content, createdAt, score, user, replies, r
   
   const handleEditClick = () => {
     setIsEditing(true)
+    if(replyingTo) {
+      setCurrentContent(prevState => `@${replyingTo} ` + prevState)
+    }
   }
 
   const handleUpdateClick = () => {
-    changeComment(id, currentContent)
+    if(replyingTo) {
+      setCurrentContent(prevState => prevState.replace(`@${replyingTo} `, ''))
+      editReply(commentThreadId, id, currentContent)
+    }
+    if(!replyingTo) {
+      setCurrentContent(prevState => prevState.replace(`@${replyingTo} `, ''))
+      changeComment(id, currentContent)
+    }
     setIsEditing(false)
     setTextAreaFirstClick(true)
     
   }
 
   const handleDeleteComment = () => {
-    openModal(id)
+
+    if(replyingTo) {
+      openModal(commentThreadId, id)
+    }
+
+    if(!replyingTo) {
+      openModal(id)
+    }
   }
 
   const handleUpvoteClick = () => {
-    upvoteComment(id)
+    if(!replyingTo) {
+      upvoteComment(id)
+    }
+    if(replyingTo) {
+      upvoteReply(commentThreadId, id)
+    }
   }
 
   const handleDownvoteClick = () => {
-    downvoteComment(id)
+    
+    if(!replyingTo) {
+      downvoteComment(id)
+    }
+
+    if(replyingTo) {
+      downvoteReply(commentThreadId, id)
+    }
   }
 
   const handleTextAreaFirstClick = (e) => {
@@ -97,6 +126,11 @@ export default function Comment({id, content, createdAt, score, user, replies, r
           {
             !isEditing && (
               <p className='comment__content__text'>
+                {
+                  replyingTo && (
+                    <span className=' text-primary-moderate-blue font-medium'>{`@${replyingTo} `}</span>
+                  )
+                }
                 {currentContent}
               </p>
             )
@@ -188,7 +222,7 @@ export default function Comment({id, content, createdAt, score, user, replies, r
 
       {
         isReplying && (
-          <CommentForm btnText="reply" placeholder={`Replying to @${user?.username}...`} />
+          <CommentForm commentThreadId={commentThreadId} recipientId={id} btnText="reply" replyingTo={user?.username} setIsReplying={setIsReplying} />
         )
       }
 

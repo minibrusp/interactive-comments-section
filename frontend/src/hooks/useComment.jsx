@@ -43,7 +43,73 @@ export default function useComment() {
     dispatch({ type: 'DOWNVOTE_COMMENT', payload: { id: id } })
   }
 
+  // REPLIES 
+
+  const replyToComment = (id, content, replyingTo) => {
+    const newReply = {
+      content: content,
+      id: uuidv1(),
+      createdAt: `${formatDistanceToNow(new Date(), { addSuffix: true })}`,
+      score: 0,
+      replyingTo: replyingTo,
+      user: {
+        'image': {
+          "webp": currentUser.image.webp,
+        },
+        username: currentUser.username
+      }
+    }
+
+    dispatch({ type: 'REPLY_COMMENT', payload: { id: id, reply: newReply} })
+  }
+  
+  const editReply = (id, replyId, content) => {
+    dispatch({ type: 'EDIT_REPLY', payload: { id: id, content: content, replyId: replyId } })
+  }
+
+  const deleteReply = (id, replyId) => {
+    dispatch({ type: 'DELETE_REPLY', payload: { id: id, replyId: replyId } })
+  }
+
+  const upvoteReply = (id, replyId) => {
+    dispatch({ type: 'UPVOTE_REPLY', payload: { id: id, replyId: replyId } })
+  }
+
+  const downvoteReply = (id, replyId) => {
+    dispatch({ type: 'DOWNVOTE_REPLY', payload: { id: id, replyId: replyId } })
+  }
+
+  const replyToReply = (id, content, replyingTo) => {
+    const newReply = {
+      content: content,
+      id: uuidv1(),
+      createdAt: `${formatDistanceToNow(new Date(), { addSuffix: true })}`,
+      score: 0,
+      replyingTo: replyingTo,
+      user: {
+        'image': {
+          "webp": currentUser.image.webp,
+        },
+        username: currentUser.username
+      }
+    }
+
+    dispatch({ type: 'REPLY_REPLY', payload: { id: id, reply: newReply} })
+  }
+
 
   
-  return { createComment, changeComment, deleteComment, upvoteComment, downvoteComment }
+  return { 
+    createComment, 
+    changeComment, 
+    deleteComment, 
+    upvoteComment, 
+    downvoteComment, 
+    replyToComment, 
+    editReply,
+    deleteReply,
+    upvoteReply,
+    downvoteReply,
+    replyToReply 
+  }
 }

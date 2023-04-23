@@ -1,5 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import { memo, useEffect } from "react";
+import { useEffect } from "react";
 import useCommentContext from "../hooks/useCommentContext";
 
 import Comment from "./Comment";
@@ -8,7 +8,6 @@ import RepliesContainer from "./RepliesContainer";
 const CommentContainer = () => {
   const { comments, dispatch } = useCommentContext()
 
-  console.log('COmment container: rendered')
   
   useEffect(() => {
     const fetchComments = async () => {
@@ -39,13 +38,14 @@ const CommentContainer = () => {
               <Comment 
                 key={comment.id}
                 id={comment.id}
+                commentThreadId={comment.id}
                 content={comment.content}
                 createdAt={comment.createdAt}
                 score={comment.score}
                 user={comment.user}
                 replies={comment.replies}
               />
-              <RepliesContainer key={comment.content} replies={comment.replies}/>
+              <RepliesContainer commentThreadId={comment.id} key={comment.content} replies={comment.replies}/>
             </div>
           ))
       }

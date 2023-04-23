@@ -3,16 +3,28 @@ import { useState } from 'react'
 import  useUserContext  from '../hooks/useUserContext'
 import useComment from '../hooks/useComment'
 
-export default function CommentForm({ placeholder, btnText }) {
+export default function CommentForm({ commentThreadId, recipientId, replyingTo, btnText, setIsReplying }) {
 
   const { currentUser } = useUserContext()
-  const [ comment, SetComment ] = useState('')
-  const { createComment } = useComment()
+  const [ comment, SetComment ] = useState(replyingTo && `@${replyingTo} `)
+  const { createComment, replyToComment, replyToReply } = useComment()
+  const type = commentThreadId === recipientId ? 'reply' : 'replyToReply'
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(currentUser)
-    createComment(comment)
+    if(!recipientId) {
+      createComment(comment)
+    }
+    if(recipientId && type === 'reply') {
+      replyToComment(recipientId, comment.replace(`@${replyingTo} `, ''), replyingTo)
+      SetComment(`@${replyingTo} `)
+      setIsReplying(false)
+    }
+    if(recipientId && type === 'replyToReply') {
+      replyToReply(commentThreadId, comment.replace(`@${replyingTo} `, ''), replyingTo)
+      SetComment(`@${replyingTo} `)
+      setIsReplying(false)
+    }
     SetComment('')
   }
 
@@ -26,7 +38,7 @@ export default function CommentForm({ placeholder, btnText }) {
         >
         <textarea 
           className="commentform__form__content resize-none text-neutral-dark-blue w-full min-h-[7rem] p-3 mb-4 border border-neutral-light-gray rounded-lg placeholder:text-neutral-grayish-blue focus-visible:outline-none focus-visible:border-neutral-grayish-blue grid-in-text"
-          placeholder={placeholder}
+          placeholder={'Add a comment...'}
           name="newComment"
           onChange={(e) => SetComment(e.target.value)}
           value={comment}
