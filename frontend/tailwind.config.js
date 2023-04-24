@@ -31,9 +31,18 @@ export default {
           'content content content',
           'votes blank replybtn'
         ],
+        'comment-large': [
+          "votes header replybtn",
+          "votes content content",
+          "votes . submitBtn"
+        ],
         'form-slim': [
           'text text text',
           'profile blank submitBtn'
+        ],
+        'form-large': [
+          "profile text submitBtn",
+          ". text ."
         ]
       }
     },

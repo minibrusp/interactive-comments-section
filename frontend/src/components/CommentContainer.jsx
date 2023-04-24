@@ -31,7 +31,7 @@ const CommentContainer = () => {
 
 
   return (
-    <div className="comment__container m-4 mb-4 relative overflow-hidden">
+    <div className="comment__container m-4 mb-4 relative overflow-y-hidden max-w-[733px] mx-auto">
       { comments && 
           comments.map((comment) => (
             <div key={comment.id}>
