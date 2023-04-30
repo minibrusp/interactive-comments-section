@@ -17,6 +17,7 @@ const registerUser = async (req, res) => {
     const newUser = await User.signup(req, res, username, password, avatar)
 
     res.status(201).json({
+      id: newUser._id,
       username: newUser.username,
       avatar: newUser.avatar
     })
@@ -37,6 +38,7 @@ const loginUser = async (req, res) => {
     const foundUser = await User.login(username, password)
 
     res.status(200).json({
+      id: foundUser._id,
       username: foundUser.username, 
       avatar: foundUser.avatar,
     })
