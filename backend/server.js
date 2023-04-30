@@ -5,11 +5,25 @@ const userRoutes = require("./routes/users")
 const Comment = require('./models/commentModel')
 const User = require('./models/userModel')
 const Reply = require('./models/replyModel')
+const fileUpload = require("express-fileupload")
 
 const app = express()
 
 // middlewares 
 app.use(express.json())
+app.use(express.static('public'))
+app.use(fileUpload({
+  createParentPath: true,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  abortOnLimit: true,
+  uriDecodeFileNames: true,
+  safeFileNames: true,
+  preserveExtension: 4,
+  limitHandler: (req, res, next) => {
+    return res.status(400).json({message: "Avatar's file size limit has been reached"})
+  }
+}))
+
 app.use((req, res, next) => {
   // console.log(req.path, req.method)
   next()

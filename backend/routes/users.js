@@ -1,15 +1,26 @@
 const express = require('express')
+const User = require('../models/userModel')
+const { registerUser, loginUser } = require('../controllers/userController')
+
 
 const router = express.Router()
 
 // READ all users
-router.get('/', (req, res) => {
-  res.status(200).json({mssg: "READ ALL USERS"})
+router.get('/', async (req, res) => {
+  
+  try {
+    const foundUsers = await User.find()
+    res.status(200).json({users: foundUsers})
+  } catch(err) {
+    res.status(404).json({error: err, message: err.message})
+  }
+
 })
 
-// READ a user
-router.get('/:id', (req, res) => {
-  res.status(200).json({mssg: "READ A USER"})
-})
+// Register a new user
+router.post('/register', registerUser)
+
+// login a user
+router.post('/login', loginUser)
 
 module.exports = router
