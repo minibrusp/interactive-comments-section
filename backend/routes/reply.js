@@ -4,13 +4,13 @@ const { createReply, updateReply, deleteReply } = require('../controllers/replyC
 const router = express.Router()
 
 // CREATE a reply
-router.post('/:id', createReply)
+router.post('/:commentId', createReply)
 
 // UPDATE a reply
-router.patch('/:id', updateReply)
+router.patch('/:replyId', updateReply)
 
 // DELETE a reply
-router.delete('/:id', deleteReply)
+router.delete('/:commentId/:replyId', deleteReply)
 
 
 module.exports = router

@@ -5,14 +5,20 @@ const mongoose = require('mongoose')
 
 // create a reply
 const createReply = async (req, res) => {
-  const { id } = req.params // comment id
+  const { commentId } = req.params // comment id
   const { user, content, replyingTo } = req.body
 
   if(!content) {
     return res.status(400).json({ error: 'Please fill in your reply'})
   }
 
+  
+
   try {
+
+    if(!mongoose.Types.ObjectId.isValid(commentId)) {
+      throw Error("No Such Comment Exist")
+    }
 
     let newReply = await Reply.create({
       content: content,
@@ -22,7 +28,7 @@ const createReply = async (req, res) => {
     })
 
     let foundComment = await Comment.findOneAndUpdate(
-      { _id: id },
+      { _id: commentId },
       { $push: { replies: newReply._id}},
       { new: true }
     )
@@ -50,16 +56,16 @@ const createReply = async (req, res) => {
 // update a reply 
 const updateReply = async (req, res) => {
 
-  const { id } = req.params //reply ID
+  const { replyId } = req.params //reply ID
 
   try {
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
+    if(!mongoose.Types.ObjectId.isValid(replyId)) {
       throw Error("No Such Reply Exist")
     }
 
     let foundReply = await Reply.findOneAndUpdate(
-      { _id: id },
+      { _id: replyId },
       { ...req.body },
       { new: true }
     )
@@ -79,21 +85,42 @@ const updateReply = async (req, res) => {
 // delete a reply 
 const deleteReply = async (req, res) => {
 
-  const { id } = req.params // reply ID
+  const { commentId, replyId } = req.params
 
   try {
 
-    if(!mongoose.Types.ObjectId.isValid(id)) {
+    if(!mongoose.Types.ObjectId.isValid(replyId)) {
       throw Error("No Such Reply Exist")
     }
 
-    let foundReply = await Reply.findOneAndDelete({_id: id})
+    let foundReply = await Reply.findOneAndDelete({_id: replyId})
     
     if(!foundReply) {
       throw Error("No Such Reply Exist")
     }
 
-    res.status(200).json(foundReply)
+    let foundComment = await Comment.findOneAndUpdate(
+      { _id: commentId },
+      { $pull: { replies: foundReply._id}},
+      { new: true }
+    )
+      .populate({
+        path: "replies",
+        populate: {
+          path: "user replyingTo",
+          select: "username avatar"
+        }
+        })
+      .populate({
+        path: "user",
+        select: "username avatar"
+      })
+
+    if(!foundComment) {
+      throw Error("No Such Comment Exist")
+    }
+
+    res.status(200).json(foundComment)
 
   } catch(error) {
     res.status(404).json({error: error.message})
