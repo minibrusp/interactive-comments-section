@@ -2,9 +2,7 @@ const express = require("express")
 const mongoose = require("mongoose")
 const commentRoutes = require("./routes/comments")
 const userRoutes = require("./routes/users")
-const Comment = require('./models/commentModel')
-const User = require('./models/userModel')
-const Reply = require('./models/replyModel')
+const replyRoutes = require("./routes/reply")
 const fileUpload = require("express-fileupload")
 
 const app = express()
@@ -30,14 +28,10 @@ app.use((req, res, next) => {
 })
 
 
-// replies post delete update 
-// reply to reply post
-
-
-
 // routes
-app.use('/api/comments', commentRoutes)
 app.use('/api/users', userRoutes)
+app.use('/api/comments', commentRoutes)
+app.use('/api/replies', replyRoutes)
 
 
 // connect to db & listen for request 

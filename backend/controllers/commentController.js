@@ -9,7 +9,8 @@ const getComments = async (req, res) => {
       .populate({
         path: "replies",
         populate: {
-          path: "user replyingTo"
+          path: "user replyingTo",
+          select: "username avatar" 
         }
         })
       .populate({
