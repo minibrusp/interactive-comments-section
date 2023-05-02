@@ -47,7 +47,6 @@ const CommentContainer = () => {
                 createdAt={comment.createdAt}
                 score={comment.score}
                 user={comment.user}
-                replies={comment.replies}
               />
               <RepliesContainer commentThreadId={comment.id} key={comment.content} replies={comment.replies}/>
             </div>

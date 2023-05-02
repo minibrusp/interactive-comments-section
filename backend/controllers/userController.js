@@ -10,8 +10,11 @@ const registerUser = async (req, res) => {
     }
 
     const avatar = req.files.avatar
+    // const avatar = req.body.avatar
     const username = req.body.username.toLowerCase().replace(" ", "")
     const password = req.body.password
+
+    console.log(avatar, username, password)
     
 
     const newUser = await User.signup(req, res, username, password, avatar)
@@ -23,7 +26,7 @@ const registerUser = async (req, res) => {
     })
 
   } catch(err) {
-    res.status(400).json({error: err, message: err.message})
+    res.status(400).json({error: {error: err, message: err.message} })
   }
 
 }

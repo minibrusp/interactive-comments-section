@@ -1,25 +1,44 @@
+import {
+  createBrowserRouter,
+  RouterProvider
+} from "react-router-dom"
+
+// layouts 
+import Root from "./layouts/Root"
+
+// pages 
+import Home from "./pages/Home"
+import Signup from "./pages/Signup"
+import Login from "./pages/Login"
 
 
-// components 
-import CommentContainer from "./components/CommentContainer"
-import CommentForm from "./components/CommentForm"
-import Modal from "./components/Modal"
-
-import useModalContext from "./hooks/useModalContext"
-
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    children: [
+      {
+        path: "/",
+        element: <Home />
+      },
+      {
+        path: "/signup",
+        element: <Signup />
+      },
+      {
+        path: "/login",
+        element: <Login />
+      }
+    ]
+  }
+])
 
 function App() {
-  const { isModalOpen } = useModalContext() 
+
   return (
-    // when modal open max-height 100vh overflow hidden
-    <section className={`font-rubik text-neutral-grayish-blue mx-4 ${isModalOpen ? 'max-h-screen ' : ''} `}>
-      <CommentContainer />
-      <CommentForm btnText="send" placeholder="Add a comment..." />
-      {
-        isModalOpen && <Modal />
-      }
-      
-    </section>
+    <>
+      <RouterProvider router={router} />
+    </>
   )
 
 
