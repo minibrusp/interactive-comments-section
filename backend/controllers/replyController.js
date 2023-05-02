@@ -45,7 +45,7 @@ const createReply = async (req, res) => {
       }) 
       
 
-    res.status(200).json(foundComment)
+    res.status(200).json(newReply)
 
   } catch(error) {
     res.status(400).json({error: error.message})
@@ -120,7 +120,7 @@ const deleteReply = async (req, res) => {
       throw Error("No Such Comment Exist")
     }
 
-    res.status(200).json(foundComment)
+    res.status(200).json(foundReply)
 
   } catch(error) {
     res.status(404).json({error: error.message})
