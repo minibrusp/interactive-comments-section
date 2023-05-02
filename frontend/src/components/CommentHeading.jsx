@@ -1,5 +1,21 @@
 /* eslint-disable react/prop-types */
-export default function CommentHeading({ avatars, user, isCurrent, createdAt}) {
+
+// avatars
+import avatarAmy from '../assets/images/avatars/image-amyrobson.webp'
+import avatarJulius from '../assets/images/avatars/image-juliusomo.webp'
+import avatarMax from '../assets/images/avatars/image-maxblagun.webp'
+import avatarRam from '../assets/images/avatars/image-ramsesmiron.webp'
+
+
+
+const avatars = new Map([
+  ['amyrobson', avatarAmy],
+  ['juliusomo', avatarJulius],
+  ['maxblagun', avatarMax],
+  ['ramsesmiron', avatarRam],
+])
+
+export default function CommentHeading({ user, isCurrent, createdAt}) {
   return (
     <div className="comment__heading flex justify-start items-center gap-3 mb-4 grid-in-header">
       <img className='comment__avatar h-8 w-8 font-medium' src={avatars.get(`${user?.username}`)} alt="user image avatar" />

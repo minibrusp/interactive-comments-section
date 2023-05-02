@@ -12,23 +12,8 @@ import CommentVotes from './CommentVotes'
 import useUserContext from '../hooks/useUserContext'
 import CommentFooter from './CommentFooter'
 
-// asssets
-// avatars
-import avatarAmy from '../assets/images/avatars/image-amyrobson.webp'
-import avatarJulius from '../assets/images/avatars/image-juliusomo.webp'
-import avatarMax from '../assets/images/avatars/image-maxblagun.webp'
-import avatarRam from '../assets/images/avatars/image-ramsesmiron.webp'
 
-
-
-const avatars = new Map([
-  ['amyrobson', avatarAmy],
-  ['juliusomo', avatarJulius],
-  ['maxblagun', avatarMax],
-  ['ramsesmiron', avatarRam],
-])
-
-export default function Comment({id, commentThreadId, content, createdAt, score, user, replies, replyingTo}) {
+export default function Comment({id, commentThreadId, content, createdAt, score, user, replyingTo}) {
   const { currentUser } = useUserContext()
 
   const [isReplying, setIsReplying] = useState(false)
@@ -42,7 +27,6 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
     <>
       <div className="comment bg-neutral-white p-4 my-4 rounded-lg grid grid-areas-comment-slim shadow-sm last-of-type:mb-0 md:grid-areas-comment-large md:gap-x-6 md:px-7 md:py-6 md:grid-cols-[39px_1fr_auto]">
         <CommentHeading 
-          avatars={avatars}
           user={user}
           isCurrent={isCurrent}
           createdAt={createdAt}
