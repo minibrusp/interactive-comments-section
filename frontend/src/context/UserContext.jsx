@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 /* eslint-disable react/prop-types */
-import { createContext, useReducer } from "react";
+import { createContext, useEffect, useReducer } from "react";
 
 import avatarJulius from '../assets/images/avatars/image-juliusomo.webp'
 
@@ -21,10 +21,22 @@ export const userReducer = (state, action) => {
 export const UserContextProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(userReducer, {
     currentUser: {
+      avatar: avatarJulius,
       image: avatarJulius,
       username: 'juliusomo',
     }
   })
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('user'))
+
+    if(user) {
+      dispatch({ type: "USER_LOGIN", payload: user})
+    }
+
+  }, [])
+
+  console.log('AuthContext state: ', state)
 
   return (
     <UserContext.Provider value={{...state, dispatch}}>

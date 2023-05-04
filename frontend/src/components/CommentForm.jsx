@@ -44,7 +44,7 @@ export default function CommentForm({ commentThreadId, recipientId, replyingTo, 
           value={comment}
         />
         <div className='comment__avatar grid-in-profile self-center'>
-          <img className='h-8 w-8' src={currentUser.image} alt="user image avatar" />
+          <img className='h-8 w-8' src={currentUser?.avatar} alt="user image avatar" />
         </div>
         
         <button 

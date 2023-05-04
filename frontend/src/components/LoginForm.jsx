@@ -1,10 +1,12 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react"
+
 import { useNavigate } from "react-router-dom";
 
+import useLogin from "../hooks/useLogin";
+
 export default function SignupForm() {
-  const [ error, setError ] = useState(null)
-  const [ errorElement, setErrorElement ] = useState([])
+  const { login, error, isLoading, emptyFields } = useLogin()
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
 
@@ -22,56 +24,16 @@ export default function SignupForm() {
     e.preventDefault()
 
     
-    if(!username) {
-      setErrorElement(prevValue => [...prevValue, 'username'])
-    } else {
-      setErrorElement(prevValue => {
-        return [
-          ...prevValue.filter(error => error !== 'username')
-        ]
-      })
-    }
+    const isSuccess = await login(username, password)
 
-    if(!password) {
-      setErrorElement(prevValue => [...prevValue, 'password'])
-    } else {
-      setErrorElement(prevValue => {
-        return [
-          ...prevValue.filter(error => error !== 'password')
-        ]
-      })
-    }
-    
-    if(!username || !password) {
-      setError('All fields must be filled')
-      return
-    }
+    if(isSuccess) {
 
-    const data = new FormData()
-    data.append('username', username)
-    data.append('password', password)
+      setUsername('')
+      setPassword('')
 
-    const response = await fetch('http://localhost:4001/api/users/login', {
-      method: 'POST',
-      body: data,
-    })
-
-    
-
-    const json = await response.json()
-
-    if(!response.ok) {
-      setError(json.error.message)
-    }
-
-    if(response.ok) {
-      console.log(json)
-
-      // setUsername('')
-      // setPassword('')
-      // setError(null)
-
-      // navigate('/')
+      console.log(isSuccess)
+      console.log('no error ')
+      navigate('/')
     }
 
 
@@ -87,7 +49,7 @@ export default function SignupForm() {
       {error && <span className="text-sm text-primary-soft-red font-bold">{error}</span>}
       
       <input 
-        className={`font-rubik px-4 py-2 border border-primary-light-grayish-blue rounded-md shadow-md w-full text-center ${ errorElement.includes('username') ? 'border-primary-soft-red' : '' } `} 
+        className={`font-rubik px-4 py-2 border border-primary-light-grayish-blue rounded-md shadow-md w-full text-center ${ emptyFields?.includes('username') ? 'border-primary-soft-red' : '' } `} 
         type="text" 
         name="username" 
         id="username" 
@@ -97,7 +59,7 @@ export default function SignupForm() {
       />
 
       <input 
-        className={`font-rubik px-4 py-2 border border-primary-light-grayish-blue rounded-md shadow-md w-full text-center ${ errorElement.includes('password') ? 'border-primary-soft-red' : '' } `}  
+        className={`font-rubik px-4 py-2 border border-primary-light-grayish-blue rounded-md shadow-md w-full text-center ${ emptyFields?.includes('password') ? 'border-primary-soft-red' : '' } `}  
         type="password" 
         name="password" 
         id="password" 
@@ -110,7 +72,8 @@ export default function SignupForm() {
         className="font-rubik bg-primary-moderate-blue text-neutral-white px-4 py-2 rounded-md shadow-md w-full" 
         type="submit"
       >
-        Signup
+        { !isLoading && <span>Login</span> }
+        { isLoading && <span>Loading....</span> }
       </button>
 
     </form>

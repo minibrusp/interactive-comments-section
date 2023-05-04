@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { FaUpload } from "react-icons/fa";
 import { useState } from "react"
+
 import { useNavigate } from "react-router-dom";
 
+import useSignup from "../hooks/useSignup";
+
 export default function SignupForm() {
-  const [ error, setError ] = useState(null)
-  const [ errorElement, setErrorElement ] = useState([])
+  const { signup, error, isLoading, emptyFields } = useSignup()
   const [ filePreview, setFilePreview ] = useState(null)
   const [ currentFile, setCurrentFile ] = useState(null)
   const [ username, setUsername ] = useState('')
@@ -40,74 +42,20 @@ export default function SignupForm() {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    
-    if(!username) {
-      setErrorElement(prevValue => [...prevValue, 'username'])
-    } else {
-      setErrorElement(prevValue => {
-        return [
-          ...prevValue.filter(error => error !== 'username')
-        ]
-      })
-    }
+    const isSuccess = await signup(username, password, currentFile)
 
-    if(!password) {
-      setErrorElement(prevValue => [...prevValue, 'password'])
-    } else {
-      setErrorElement(prevValue => {
-        return [
-          ...prevValue.filter(error => error !== 'password')
-        ]
-      })
-    }
-
-    if(!filePreview) {
-      setErrorElement((prevValue) => [...prevValue, 'avatar' ])
-    } else {
-      setErrorElement(prevValue => {
-        return [
-          ...prevValue.filter(error => error !== 'avatar')
-        ]
-      })
-    }
-    
-    if(!username || !password || !filePreview) {
-      setError('All fields must be filled')
-      return
-    }
-
-    const data = new FormData()
-    data.append('username', username)
-    data.append('password', password)
-    data.append('avatar', currentFile, currentFile.name)
-
-    const response = await fetch('http://localhost:4001/api/users/register', {
-      method: 'POST',
-      body: data,
-    })
-
-    
-
-    const json = await response.json()
-
-    if(!response.ok) {
-      setError(json.error.message)
-    }
-
-    if(response.ok) {
-      console.log(json)
-
+    if(isSuccess) {
       URL.revokeObjectURL(filePreview)
       setFilePreview(null)
       setUsername('')
       setPassword('')
-      setError(null)
-
+  
+      console.log(isSuccess)
+      console.log('no error ')
       navigate('/')
+
     }
 
-
-    
   }
 
   return (
@@ -118,7 +66,7 @@ export default function SignupForm() {
 
         <label 
           htmlFor="avatar"
-          className={`font-rubik text-neutral-white h-[100px] w-[100px] bg-primary-moderate-blue rounded-full cursor-pointer flex flex-row justify-center items-center shadow-md border ${ errorElement.includes('avatar') ? 'border-primary-soft-red' : '' }`} 
+          className={`font-rubik text-neutral-white h-[100px] w-[100px] bg-primary-moderate-blue rounded-full cursor-pointer flex flex-row justify-center items-center shadow-md border ${ emptyFields?.includes('avatar') ? 'border-primary-soft-red' : '' }`} 
         >
           { !filePreview && <FaUpload className="text-2xl" /> }
           
@@ -139,7 +87,7 @@ export default function SignupForm() {
         {error && <span className="text-sm text-primary-soft-red font-bold">{error}</span>}
         
         <input 
-          className={`font-rubik px-4 py-2 border border-primary-light-grayish-blue rounded-md shadow-md w-full text-center ${ errorElement.includes('username') ? 'border-primary-soft-red' : '' } `} 
+          className={`font-rubik px-4 py-2 border border-primary-light-grayish-blue rounded-md shadow-md w-full text-center ${ emptyFields?.includes('username') ? 'border-primary-soft-red' : '' } `} 
           type="text" 
           name="username" 
           id="username" 
@@ -149,7 +97,7 @@ export default function SignupForm() {
         />
 
         <input 
-          className={`font-rubik px-4 py-2 border border-primary-light-grayish-blue rounded-md shadow-md w-full text-center ${ errorElement.includes('password') ? 'border-primary-soft-red' : '' } `}  
+          className={`font-rubik px-4 py-2 border border-primary-light-grayish-blue rounded-md shadow-md w-full text-center ${ emptyFields?.includes('password') ? 'border-primary-soft-red' : '' } `}  
           type="password" 
           name="password" 
           id="password" 
@@ -159,10 +107,12 @@ export default function SignupForm() {
         />
 
         <button 
+          disabled={isLoading}
           className="font-rubik bg-primary-moderate-blue text-neutral-white px-4 py-2 rounded-md shadow-md w-full" 
           type="submit"
         >
-          Signup
+          { !isLoading && <span>Signup</span> }
+          { isLoading && <span>Loading....</span> }
         </button>
 
       </form>

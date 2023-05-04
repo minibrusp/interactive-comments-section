@@ -1,7 +1,19 @@
-import avatarMax from '../assets/images/avatars/image-maxblagun.webp'
+import useUserContext from "../hooks/useUserContext"
+
 
 export default function UserAvatar() {
+  const { currentUser } = useUserContext()
+
   return (
-    <img className='comment__avatar h-8 w-8' src={avatarMax} alt="user image avatar" />
+    <>
+      {
+        currentUser.token 
+          ? <img className='comment__avatar h-8 w-8' src={currentUser.avatar} alt="user image avatar" />
+          : <img className='comment__avatar h-8 w-8' src={currentUser.image} alt="user image avatar" />
+      }
+    
+    </>
+    
+  
   )
 }
