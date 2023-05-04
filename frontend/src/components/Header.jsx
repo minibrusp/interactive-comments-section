@@ -3,7 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 export default function Header() {
   
   return (
-    <header className="font-rubik text-neutral-grayish-blue bg-neutral-white mb-4 p-4 flex justify-between items-center">
+    <header className="font-rubik text-neutral-grayish-blue bg-neutral-white mb-4 p-4 flex justify-between items-center max-w-[733px] mx-auto">
         
       <Link to="/">
         <h1 className="tracking-widest text-2xl text-primary-moderate-blue">CAT</h1>

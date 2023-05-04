@@ -6,7 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function SignupForm() {
   const [ error, setError ] = useState(null)
   const [ errorElement, setErrorElement ] = useState([])
-  const [ file, setFile ] = useState(null)
+  const [ filePreview, setFilePreview ] = useState(null)
+  const [ currentFile, setCurrentFile ] = useState(null)
   const [ username, setUsername ] = useState('')
   const [ password, setPassword ] = useState('')
 
@@ -18,12 +19,13 @@ export default function SignupForm() {
 
     if(e.target.files.length === 0) return
 
-    if((file) && (e.target.files.length !== 0) ) {
-      URL.revokeObjectURL(file)
-      setFile(null)
+    if((filePreview) && (e.target.files.length !== 0) ) {
+      URL.revokeObjectURL(filePreview)
+      setFilePreview(null)
+      setCurrentFile(null)
     }
-
-    setFile(URL.createObjectURL(e.target.files[0]))
+    setCurrentFile(e.target.files[0])
+    setFilePreview(URL.createObjectURL(e.target.files[0]))
 
   }
 
@@ -59,7 +61,7 @@ export default function SignupForm() {
       })
     }
 
-    if(!file) {
+    if(!filePreview) {
       setErrorElement((prevValue) => [...prevValue, 'avatar' ])
     } else {
       setErrorElement(prevValue => {
@@ -69,26 +71,22 @@ export default function SignupForm() {
       })
     }
     
-    if(!username || !password || !file) {
+    if(!username || !password || !filePreview) {
       setError('All fields must be filled')
       return
     }
-    
-    const user = {
-      avatar: file,
-      username,
-      password
-    }
 
-    console.log(JSON.stringify(user))
+    const data = new FormData()
+    data.append('username', username)
+    data.append('password', password)
+    data.append('avatar', currentFile, currentFile.name)
 
     const response = await fetch('http://localhost:4001/api/users/register', {
       method: 'POST',
-      body: JSON.stringify(user),
-      headers: {
-        'Content-Type': 'application/json',
-      }
+      body: data,
     })
+
+    
 
     const json = await response.json()
 
@@ -97,16 +95,10 @@ export default function SignupForm() {
     }
 
     if(response.ok) {
-      console.log(`Registration Complete`)
-      console.log(user)
-      console.log(`Username: ${username}`)
-      console.log(`Password: ${password}`)
-      console.log(`Avatar: ${file}`)
-      console.log(`!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!`);
       console.log(json)
 
-      URL.revokeObjectURL(file)
-      setFile(null)
+      URL.revokeObjectURL(filePreview)
+      setFilePreview(null)
       setUsername('')
       setPassword('')
       setError(null)
@@ -120,7 +112,7 @@ export default function SignupForm() {
 
   return (
     <form 
-      className="mx-auto flex flex-col items-center gap-y-4 px-4"
+      className="mx-auto flex flex-col items-center gap-y-4 px-4 max-w-[375px]"
       onSubmit={handleSubmit}
     >
 
@@ -128,9 +120,9 @@ export default function SignupForm() {
           htmlFor="avatar"
           className={`font-rubik text-neutral-white h-[100px] w-[100px] bg-primary-moderate-blue rounded-full cursor-pointer flex flex-row justify-center items-center shadow-md border ${ errorElement.includes('avatar') ? 'border-primary-soft-red' : '' }`} 
         >
-          { !file && <FaUpload className="text-2xl" /> }
+          { !filePreview && <FaUpload className="text-2xl" /> }
           
-          { file && <img src={file} className="h-[100px] w-[100px] rounded-full" alt="avatar" /> }
+          { filePreview && <img src={filePreview} className="h-[100px] w-[100px] rounded-full" alt="avatar" /> }
 
         </label>
 

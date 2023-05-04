@@ -10,7 +10,6 @@ const registerUser = async (req, res) => {
     }
 
     const avatar = req.files.avatar
-    // const avatar = req.body.avatar
     const username = req.body.username.toLowerCase().replace(" ", "")
     const password = req.body.password
 
@@ -38,13 +37,15 @@ const loginUser = async (req, res) => {
     const username = req.body.username?.toLowerCase().replace(" ", "")
     const password = req.body.password
 
-    const foundUser = await User.login(username, password)
+    res.status(200).json({ mssg: "Successfully logged in", input: {username, password}})
 
-    res.status(200).json({
-      id: foundUser._id,
-      username: foundUser.username, 
-      avatar: foundUser.avatar,
-    })
+    // const foundUser = await User.login(username, password)
+
+    // res.status(200).json({
+    //   id: foundUser._id,
+    //   username: foundUser.username, 
+    //   avatar: foundUser.avatar,
+    // })
 
   } catch(error) {
     res.status(400).json({error: error.message})
