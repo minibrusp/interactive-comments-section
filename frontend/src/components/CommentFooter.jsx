@@ -41,6 +41,7 @@ export default function CommentFooter({
 
     setIsEditing(true)
     if(replyingTo) {
+      console.log(replyingTo)
       setCurrentContent(prevState => `@${replyingTo} ` + prevState)
     }
   }

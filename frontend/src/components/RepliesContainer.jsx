@@ -12,7 +12,7 @@ export default function RepliesContainer({ replies, commentThreadId }) {
               <Comment 
                 key={reply._id}
                 id={reply._id}
-                content={reply.content}
+                content={reply.content.replace(`@${reply.replyingTo?.username}`, '')}
                 createdAt={reply.createdAt}
                 score={reply.score}
                 user={reply.user}
