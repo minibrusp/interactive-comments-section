@@ -38,6 +38,11 @@ export default function CommentFooter({
 
   const handleUpdateClick = () => {
     if(replyingTo) {
+      console.log('Replying Toooooo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+      console.log('commentThreadId: ', commentThreadId)
+      console.log('id: ', id)
+      console.log('currentContent: ', currentContent)
+      
       setCurrentContent(prevState => prevState.replace(`@${replyingTo} `, ''))
       editReply(commentThreadId, id, currentContent)
     }

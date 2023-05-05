@@ -9,21 +9,21 @@ export default function CommentVotes({ id, commentThreadId, score, replyingTo })
 
   const handleUpvoteClick = () => {
     if(!replyingTo) {
-      upvoteComment(id)
+      upvoteComment(id, score)
     }
     if(replyingTo) {
-      upvoteReply(commentThreadId, id)
+      upvoteReply(commentThreadId, id, score)
     }
   }
 
   const handleDownvoteClick = () => {
     
     if(!replyingTo) {
-      downvoteComment(id)
+      downvoteComment(id, score)
     }
 
     if(replyingTo) {
-      downvoteReply(commentThreadId, id)
+      downvoteReply(commentThreadId, id, score)
     }
   }
 

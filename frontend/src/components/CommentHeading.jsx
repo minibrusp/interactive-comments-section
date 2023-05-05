@@ -6,6 +6,8 @@ import avatarJulius from '../assets/images/avatars/image-juliusomo.webp'
 import avatarMax from '../assets/images/avatars/image-maxblagun.webp'
 import avatarRam from '../assets/images/avatars/image-ramsesmiron.webp'
 
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+
 
 
 const avatars = new Map([
@@ -25,7 +27,9 @@ export default function CommentHeading({ user, isCurrent, createdAt}) {
           <p className='comment__current-user text-neutral-white bg-primary-moderate-blue px-1.5 py-px tracking-wide rounded-sm text-xs font-medium'>you</p>
         ) 
       }
-      <p className='comment__date text-neutral-grayish-blue'>{createdAt}</p>
+
+      <p className='comment__date text-neutral-grayish-blue'>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</p> 
+    
     </div>
   )
 }

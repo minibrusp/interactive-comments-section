@@ -22,7 +22,6 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
   const isCurrent = currentUser?.username === user?.username ? true : false
   const [textAreaFirstClick, setTextAreaFirstClick] = useState(true)
 
-
   return (
     <>
       <div className="comment bg-neutral-white p-4 my-4 rounded-lg grid grid-areas-comment-slim shadow-sm last-of-type:mb-0 md:grid-areas-comment-large md:gap-x-6 md:px-7 md:py-6 md:grid-cols-[39px_1fr_auto]">
@@ -69,7 +68,7 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
 
       {
         isReplying && (
-          <CommentForm commentThreadId={commentThreadId} recipientId={id} btnText="reply" replyingTo={user?.username} setIsReplying={setIsReplying} />
+          <CommentForm commentThreadId={commentThreadId} recipientId={id} btnText="reply" commentThreadUserId={user?._id} replyingTo={user?.username} setIsReplying={setIsReplying} />
         )
       }
 

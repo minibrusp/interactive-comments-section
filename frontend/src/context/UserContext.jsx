@@ -22,7 +22,6 @@ export const UserContextProvider = ({ children }) => {
   const [ state, dispatch ] = useReducer(userReducer, {
     currentUser: {
       avatar: avatarJulius,
-      image: avatarJulius,
       username: 'juliusomo',
     }
   })

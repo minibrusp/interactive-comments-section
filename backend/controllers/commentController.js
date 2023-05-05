@@ -64,8 +64,10 @@ const createComment = async (req, res) => {
 
   const { userId, content } = req.body
 
+  console.log(req.body)
+
   if(!content) {
-    return res.status(400).json({ error: 'Please fill in your comment'})
+    return res.status(400).json({ error: { message: 'Please fill in your comment' } })
   }
 
   try {
@@ -128,7 +130,7 @@ const updateComment = async (req, res) => {
     res.status(200).json(foundComment)
 
   } catch(error) {
-    res.status(404).json({error: error.message})
+    res.status(404).json({error: {error: error, message: error.message} })
   }
 }
 

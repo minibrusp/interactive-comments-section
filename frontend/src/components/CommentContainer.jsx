@@ -14,11 +14,12 @@ const CommentContainer = () => {
     const fetchComments = async () => {
       try {
         setIsLoading(true)
-        const response = await fetch('http://localhost:3000/comments')
+        const response = await fetch('http://localhost:4001/api/comments/')
         const json = await response.json()
         if(response.ok) {
           setIsLoading(false)
           dispatch({ type: 'SET_COMMENTS', payload: json})
+          // console.log(json)
         }
       } catch(err) {
         setIsLoading(false)
@@ -33,22 +34,23 @@ const CommentContainer = () => {
       .catch(error => console.log(error))
     }, [dispatch])
 
+  
 
   return (
     <div className="comment__container m-4 mb-4 relative overflow-y-hidden max-w-[733px] mx-auto">
       { comments &&
           comments.map((comment) => (
-            <div key={comment.id}>
+            <div key={comment._id}>
               <Comment 
-                key={comment.id}
-                id={comment.id}
-                commentThreadId={comment.id}
+                key={comment._id }
+                id={comment._id}
+                commentThreadId={comment._id}
                 content={comment.content}
                 createdAt={comment.createdAt}
                 score={comment.score}
                 user={comment.user}
               />
-              <RepliesContainer commentThreadId={comment.id} key={comment.content} replies={comment.replies}/>
+              <RepliesContainer commentThreadId={comment._id} key={comment.content} replies={comment.replies}/>
             </div>
           ))
       }
@@ -67,7 +69,7 @@ const CommentContainer = () => {
       }
 
       {
-        (!comments && !isLoading) && (
+        (comments?.length === 0 && !isLoading) && (
           <div className="comment__container__loader block text-center mx-auto my-4">
             <span>no comments to show</span>
           </div>

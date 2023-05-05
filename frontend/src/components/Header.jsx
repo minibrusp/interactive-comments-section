@@ -1,7 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
 import useUserContext from "../hooks/useUserContext";
 import UserAvatar from "./UserAvatar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+
+// assets 
+import logo from '../assets/images/favicon.png'
 
 export default function Header() {
   const { currentUser, dispatch } = useUserContext()
@@ -17,16 +20,22 @@ export default function Header() {
     dispatch({ type: 'USER_LOGOUT' })
     localStorage.removeItem('user');
   }
-
-  useEffect(() => {
-    console.log(`User Changed`, currentUser)
-  }, [currentUser])
   
   return (
     <header className="font-rubik text-neutral-grayish-blue bg-neutral-white mb-4 p-4 flex justify-between items-center max-w-[733px] mx-auto">
         
       <Link to="/">
-        <h1 className="tracking-widest text-2xl text-primary-moderate-blue">CAT</h1>
+        <h1 className="tracking-widest text-2xl text-primary-moderate-blue">
+          <span className="hidden">CAT</span>
+          <div className="flex justify-center">
+            <img 
+              alt="CAT logo"
+              className="h-10 w-10"
+              src={logo}
+              />
+          </div>
+        </h1>
+        
       </Link>
 
       {!currentUser?.token 

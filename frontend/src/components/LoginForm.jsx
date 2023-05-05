@@ -31,8 +31,6 @@ export default function SignupForm() {
       setUsername('')
       setPassword('')
 
-      console.log(isSuccess)
-      console.log('no error ')
       navigate('/')
     }
 
@@ -69,6 +67,7 @@ export default function SignupForm() {
       />
 
       <button 
+        disabled={isLoading}
         className="font-rubik bg-primary-moderate-blue text-neutral-white px-4 py-2 rounded-md shadow-md w-full" 
         type="submit"
       >

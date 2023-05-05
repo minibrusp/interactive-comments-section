@@ -17,7 +17,7 @@ export const commentsReducer = (state, action) => {
     case 'EDIT_COMMENT':
       return {
         comments: [...state.comments.map(comment => {
-          if(comment.id === action.payload.id) {
+          if(comment._id === action.payload.id) {
             return {
               ...comment,
               content: action.payload.content
@@ -30,14 +30,14 @@ export const commentsReducer = (state, action) => {
       return {
         comments: [
           ...state.comments.filter(comment => {
-            return comment.id !== action.payload.id
+            return comment._id !== action.payload.id
           })
         ]
       }
     case 'UPVOTE_COMMENT':
       return {
         comments: [...state.comments.map(comment => {
-          if(comment.id === action.payload.id) {
+          if(comment._id === action.payload.id) {
             return {
               ...comment,
               score: comment.score + 1
@@ -49,7 +49,7 @@ export const commentsReducer = (state, action) => {
     case 'DOWNVOTE_COMMENT':
       return {
         comments: [...state.comments.map(comment => {
-          if(comment.id === action.payload.id) {
+          if(comment._id === action.payload.id) {
             return {
               ...comment,
               score: comment.score - 1
@@ -61,7 +61,7 @@ export const commentsReducer = (state, action) => {
     case 'REPLY_COMMENT':
       return {
         comments: [...state.comments.map(comment => {
-          if(comment.id === action.payload.id) {
+          if(comment._id === action.payload.id) {
             return {
               ...comment,
               replies: [ ...comment.replies, action.payload.reply ]
@@ -73,11 +73,11 @@ export const commentsReducer = (state, action) => {
     case 'EDIT_REPLY':
       return {
         comments: [...state.comments.map(comment => {
-          if(comment.id === action.payload.id) {
+          if(comment._id === action.payload.id) {
             return {
               ...comment,
               replies: [ ...comment.replies.map(reply => {
-                if(reply.id === action.payload.replyId) {
+                if(reply._id === action.payload.replyId) {
                   return {
                     ...reply,
                     content: action.payload.content
@@ -93,11 +93,11 @@ export const commentsReducer = (state, action) => {
     case 'DELETE_REPLY':
       return {
         comments: [...state.comments.map(comment => {
-          if(comment.id === action.payload.id) {
+          if(comment._id === action.payload.id) {
             return {
               ...comment,
               replies: [ ...comment.replies.filter(reply => {
-                return reply.id !== action.payload.replyId
+                return reply._id !== action.payload.replyId
 
               }) ]
             }
@@ -108,11 +108,11 @@ export const commentsReducer = (state, action) => {
       case 'UPVOTE_REPLY':
         return {
           comments: [...state.comments.map(comment => {
-            if(comment.id === action.payload.id) {
+            if(comment._id === action.payload.id) {
               return {
                 ...comment,
                 replies: [ ...comment.replies.map(reply => {
-                  if(reply.id === action.payload.replyId) {
+                  if(reply._id === action.payload.replyId) {
                     return {
                       ...reply,
                       score: reply.score + 1
@@ -128,11 +128,11 @@ export const commentsReducer = (state, action) => {
       case 'DOWNVOTE_REPLY':
         return {
           comments: [...state.comments.map(comment => {
-            if(comment.id === action.payload.id) {
+            if(comment._id === action.payload.id) {
               return {
                 ...comment,
                 replies: [ ...comment.replies.map(reply => {
-                  if(reply.id === action.payload.replyId) {
+                  if(reply._id === action.payload.replyId) {
                     return {
                       ...reply,
                       score: reply.score - 1
@@ -148,7 +148,7 @@ export const commentsReducer = (state, action) => {
       case 'REPLY_REPLY':
         return {
           comments: [...state.comments.map(comment => {
-            if(comment.id === action.payload.id) {
+            if(comment._id === action.payload.id) {
               return {
                 ...comment,
                 replies: [ ...comment.replies, action.payload.reply ]

@@ -17,6 +17,7 @@ export default function useModal() {
     setIsModalOpen(false)
     setTargetComment(null)
     if(replyId) {
+      console.log('BOOOM')
       setTargetReply(null)
     }
   }

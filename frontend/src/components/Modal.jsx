@@ -6,12 +6,16 @@ import useModalContext from "../hooks/useModalContext"
 export default function Modal() {
 
   const { closeModal, modalDeleteConfirm } = useModal()
-  const { targetComment} = useModalContext()
+  const { targetComment, targetReply } = useModalContext()
 
-  const handleClick = () => {
+  const handleBtnConfirmDeleteClick = () => {
+      modalDeleteConfirm(targetComment)
+  }
 
-    modalDeleteConfirm(targetComment)
-
+  const handleBtnCancelClick = () => {
+    !targetReply 
+      ? closeModal()
+      : closeModal(targetReply)
   }
 
   return (
@@ -22,13 +26,13 @@ export default function Modal() {
         <div className="delete-modal__cta flex flex-row justify-start items-center gap-4 w-full md:justify-between md:gap-3">
           <button 
             className='delete-modal__cta__reject text-base font-medium uppercase text-neutral-white bg-neutral-grayish-blue rounded-lg py-3 px-4 md:px-8'
-            onClick={() => closeModal()}
+            onClick={handleBtnCancelClick}
           >
             no, cancel
           </button>
           <button 
             className='delete-modal__cta__approve text-base font-medium uppercase text-neutral-white bg-primary-soft-red rounded-lg py-3 px-4 md:px-8'
-            onClick={handleClick}
+            onClick={handleBtnConfirmDeleteClick}
           >
             yes, delete
           </button>

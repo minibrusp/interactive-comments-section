@@ -10,13 +10,13 @@ export default function RepliesContainer({ replies, commentThreadId }) {
           {
             replies.map(reply => (
               <Comment 
-                key={reply.id}
-                id={reply.id}
+                key={reply._id}
+                id={reply._id}
                 content={reply.content}
                 createdAt={reply.createdAt}
                 score={reply.score}
                 user={reply.user}
-                replyingTo={reply.replyingTo}
+                replyingTo={reply.replyingTo.username}
                 commentThreadId={commentThreadId}
               />
             ))

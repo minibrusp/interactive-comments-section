@@ -2,17 +2,14 @@ const Reply = require('../models/replyModel')
 const Comment = require('../models/commentModel')
 const mongoose = require('mongoose')
 
-
 // create a reply
 const createReply = async (req, res) => {
   const { commentId } = req.params // comment id
   const { user, content, replyingTo } = req.body
 
   if(!content) {
-    return res.status(400).json({ error: 'Please fill in your reply'})
+    return res.status(400).json({ error: { message: 'Please fill in your reply'} })
   }
-
-  
 
   try {
 
@@ -42,7 +39,13 @@ const createReply = async (req, res) => {
       .populate({
         path: "user",
         select: "username avatar"
-      }) 
+      })
+      
+    newReply = await newReply
+      .populate({
+        path: "replyingTo user",
+        select: "username avatar"
+      })
       
 
     res.status(200).json(newReply)
@@ -123,7 +126,7 @@ const deleteReply = async (req, res) => {
     res.status(200).json(foundReply)
 
   } catch(error) {
-    res.status(404).json({error: error.message})
+    res.status(404).json({error: { message: error.message } })
   }
 
 }

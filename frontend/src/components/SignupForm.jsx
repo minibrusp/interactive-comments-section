@@ -49,9 +49,7 @@ export default function SignupForm() {
       setFilePreview(null)
       setUsername('')
       setPassword('')
-  
-      console.log(isSuccess)
-      console.log('no error ')
+
       navigate('/')
 
     }
