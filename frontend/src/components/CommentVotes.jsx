@@ -28,7 +28,7 @@ export default function CommentVotes({ id, commentThreadId, score, replyingTo })
   }
 
   return (
-    <div className="comment__votes bg-neutral-very-light-gray inline-flex justify-start items-center rounded-lg grid-in-votes md:flex-col md:self-start md:rounded-xl max-w-[39px]">
+    <div className="comment__votes bg-neutral-very-light-gray inline-flex justify-start items-center rounded-lg grid-in-votes md:flex-col md:self-start md:rounded-xl max-w-[97px]">
           <button 
             className='comment__votes__upvote-btn group block py-[15px] px-4 md:px-3.5'
             onClick={handleUpvoteClick}

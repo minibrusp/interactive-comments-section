@@ -1,7 +1,5 @@
 import useUserContext from "./useUserContext"
 import useCommentContext from "./useCommentContext"
-import {v1 as uuidv1 } from 'uuid'
-import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import { useState } from "react"
 
 
