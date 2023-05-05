@@ -12,7 +12,10 @@ export const userReducer = (state, action) => {
     case 'USER_LOGIN':
       return { currentUser: action.payload }
     case 'USER_LOGOUT':
-      return { currentUser: null }
+      return { currentUser: {
+        avatar: avatarJulius,
+        username: 'juliusomo',
+      } }
     default:
       return state
   }

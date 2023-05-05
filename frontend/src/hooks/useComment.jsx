@@ -17,6 +17,7 @@ export default function useComment() {
     setError(null)
     setEmptyFields([])
 
+
     const coms = {
       "content": content,
       "userId": currentUser.id
@@ -177,6 +178,7 @@ export default function useComment() {
     setError(null)
     setEmptyFields([])
 
+
  
     const newReply = {
       content: content,
@@ -327,6 +329,7 @@ export default function useComment() {
     setError(null)
     setEmptyFields([])
 
+
     // console.log('replyToReply')
     
     // console.log('REPLY TO REPLY ~~~~~~~~~~~~~~~~')
@@ -381,6 +384,7 @@ export default function useComment() {
     replyToReply,
     isLoading,
     error,
+    setError,
     emptyFields 
   }
 }

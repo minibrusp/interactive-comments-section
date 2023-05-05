@@ -28,7 +28,7 @@ export default function CommentHeading({ user, isCurrent, createdAt}) {
         ) 
       }
 
-      <p className='comment__date text-neutral-grayish-blue'>{formatDistanceToNow(new Date(createdAt), { addSuffix: true })}</p> 
+      <p className='comment__date text-neutral-grayish-blue'>{formatDistanceToNow(new Date(createdAt), { addSuffix: true }).replace("about", "")}</p> 
     
     </div>
   )

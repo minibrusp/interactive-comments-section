@@ -107,25 +107,26 @@ const updateComment = async (req, res) => {
 
     let foundComment = await Comment.findOne({_id: id})
 
-    if(foundComment.replies.length !== 0) {
-      foundComment = await foundComment
-        .populate({
-          path: "replies",
-          populate: {
-            path: "user replyingTo"
-          }
-          })
-        .populate({
-          path: "user",
-          select: "username avatar"
-        })
-    } else {
-      foundComment = await foundComment
-        .populate({
-          path: "user",
-          select: "username avatar"
-        })
-    }
+    // if(foundComment.replies.length !== 0) {
+    //   foundComment = await foundComment
+    //     .populate({
+    //       path: "replies",
+    //       populate: {
+    //         path: "user replyingTo",
+    //         select: "username avatar"
+    //       }
+    //       })
+    //     .populate({
+    //       path: "user",
+    //       select: "username avatar"
+    //     })
+    // } else {
+    //   foundComment = await foundComment
+    //     .populate({
+    //       path: "user",
+    //       select: "username avatar"
+    //     })
+    // }
 
     res.status(200).json(foundComment)
 

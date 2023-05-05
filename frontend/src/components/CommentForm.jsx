@@ -14,11 +14,18 @@ export default function CommentForm({
 
   const { currentUser } = useUserContext()
   const [ comment, SetComment ] = useState(replyingTo && `@${replyingTo} `)
-  const { createComment, replyToComment, replyToReply, error, isLoading } = useComment()
+  const { createComment, replyToComment, replyToReply, error, isLoading, setError } = useComment()
   const type = commentThreadId === recipientId ? 'reply' : 'replyToReply'
 
   const handleSubmit = (e) => {
     e.preventDefault()
+
+    if(!currentUser.token) {
+      console.log('Not Authenticated')
+      setError("User not authenticated, Please login or register an account")
+      return
+    }
+
     if(!recipientId) {
       createComment(comment)
     }
