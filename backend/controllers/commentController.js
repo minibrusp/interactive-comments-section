@@ -64,8 +64,6 @@ const createComment = async (req, res) => {
 
   const { userId, content } = req.body
 
-  console.log(req.body)
-
   if(!content) {
     return res.status(400).json({ error: { message: 'Please fill in your comment' } })
   }

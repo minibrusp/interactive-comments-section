@@ -39,9 +39,11 @@ app.use('/api/replies', replyRoutes)
 
 
 // connect to db & listen for request 
-mongoose.connect("mongodb://127.0.0.1:27017/commentsDB", { useNewUrlParser: true })
+// mongoose.connect("mongodb://127.0.0.1:27017/commentsDB", { useNewUrlParser: true })
+mongoose.connect(process.env.MONG_URI)
   .then(() => {
-    app.listen(4001, () => console.log("Successfully connected to the Database and server now listening on port 4001"))
+    // app.listen(process.env.PORT, () => console.log("Successfully connected to the Database and server now listening on port 4001"))
+    app.listen(process.env.PORT, () => console.log("Successfully connected to the Database and server now listening on port " + process.env.PORT))
   })
   .catch(error => console.log(error))
 

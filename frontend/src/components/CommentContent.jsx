@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 
 
-export default function CommentContent({isEditing, currentContent, setCurrentContent, replyingTo, textAreaFirstClick, setTextAreaFirstClick}) {
+export default function CommentContent({isEditing, content, currentContent, setCurrentContent, replyingTo, textAreaFirstClick, setTextAreaFirstClick}) {
 
   const handleTextAreaFirstClick = (e) => {
     if(textAreaFirstClick) {
@@ -20,7 +20,7 @@ export default function CommentContent({isEditing, currentContent, setCurrentCon
                     <span className=' text-primary-moderate-blue font-medium'>{`@${replyingTo} `}</span>
                   )
                 }
-                {currentContent}
+                {content}
               </p>
             )
           }

@@ -12,7 +12,8 @@ import useComment from '../hooks/useComment'
 export default function CommentFooter({
   id,
   commentThreadId,
-  replyingTo, 
+  replyingTo,
+  content, 
   currentContent,
   setCurrentContent,
   isCurrent,
@@ -30,6 +31,14 @@ export default function CommentFooter({
   }
   
   const handleEditClick = () => {
+
+    // if(!currentUser.token) {
+    //   console.log(isAuthModalOpen)
+    //   setIsAuthModalOpen(true)
+    //   return
+    // }
+
+
     setIsEditing(true)
     if(replyingTo) {
       setCurrentContent(prevState => `@${replyingTo} ` + prevState)
@@ -52,10 +61,18 @@ export default function CommentFooter({
     }
     setIsEditing(false)
     setTextAreaFirstClick(true)
+    setCurrentContent(content)
     
   }
 
   const handleDeleteComment = () => {
+
+    // if(!currentUser.token) {
+    //   console.log(isAuthModalOpen)
+    //   setIsAuthModalOpen(true)
+    //   return
+    // }
+
 
     if(replyingTo) {
       openModal(commentThreadId, id)
@@ -68,7 +85,9 @@ export default function CommentFooter({
 
   return (
     <>
+      {/* { error && <div>{error}</div>} */}
       <div className="comment__footer grid-in-replybtn self-center flex flex-row gap-4 justify-self-end md:self-start">
+
 
       {
         !isCurrent && (

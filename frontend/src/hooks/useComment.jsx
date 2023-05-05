@@ -1,11 +1,14 @@
+import { useState } from "react"
+
 import useUserContext from "./useUserContext"
 import useCommentContext from "./useCommentContext"
-import { useState } from "react"
+import useAuthModal from "./useAuthModal"
 
 
 export default function useComment() {
 
   const { currentUser } = useUserContext()
+  const { isAuthenticated, openAuthModal } = useAuthModal()
   const { dispatch } = useCommentContext()
   const [ isLoading, setIsLoading] = useState(false)
   const [ error, setError ] = useState(null)
@@ -26,7 +29,10 @@ export default function useComment() {
     const response = await fetch('http://localhost:4001/api/comments/', {
       method: 'POST',
       body: JSON.stringify(coms),
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -34,7 +40,12 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
+
       console.log(json.error.message)
+
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
     }
 
     if(response.ok) {
@@ -55,7 +66,10 @@ export default function useComment() {
     const response = await fetch(`http://localhost:4001/api/comments/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ content: newContent }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -64,6 +78,11 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+      
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
+
     }
 
     if(response.ok) {
@@ -82,6 +101,10 @@ export default function useComment() {
 
     const response = await fetch(`http://localhost:4001/api/comments/${id}`, {
       method: 'DELETE',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -90,6 +113,11 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+      
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
+
     }
 
     if(response.ok) {
@@ -111,7 +139,10 @@ export default function useComment() {
     const response = await fetch(`http://localhost:4001/api/comments/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ score: newScore }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -120,6 +151,11 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
+
     }
 
     if(response.ok) {
@@ -142,7 +178,10 @@ export default function useComment() {
     const response = await fetch(`http://localhost:4001/api/comments/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ score: newScore }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -151,6 +190,11 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
+
     }
 
     if(response.ok) {
@@ -189,7 +233,10 @@ export default function useComment() {
     const response = await fetch(`http://localhost:4001/api/replies/${id}`, {
       method: 'POST',
       body: JSON.stringify(newReply),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -198,6 +245,11 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
+
     }
 
     if(response.ok) {
@@ -218,7 +270,10 @@ export default function useComment() {
     const response = await fetch(`http://localhost:4001/api/replies/${replyId}`, {
       method: 'PATCH',
       body: JSON.stringify({ content: content }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -227,6 +282,11 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
+
     }
 
     if(response.ok) {
@@ -249,6 +309,10 @@ export default function useComment() {
 
     const response = await fetch(`http://localhost:4001/api/replies/${id}/${replyId}`, {
       method: 'DELETE',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -257,6 +321,10 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
     }
 
     if(response.ok) {
@@ -276,7 +344,10 @@ export default function useComment() {
     const response = await fetch(`http://localhost:4001/api/replies/${replyId}`, {
       method: 'PATCH',
       body: JSON.stringify({ score: score + 1 }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -285,6 +356,11 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
+
     }
 
     if(response.ok) {
@@ -304,7 +380,10 @@ export default function useComment() {
     const response = await fetch(`http://localhost:4001/api/replies/${replyId}`, {
       method: 'PATCH',
       body: JSON.stringify({ score: score - 1 }),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -313,6 +392,11 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
+
     }
 
     if(response.ok) {
@@ -349,7 +433,10 @@ export default function useComment() {
     const response = await fetch(`http://localhost:4001/api/replies/${id}`, {
       method: 'POST',
       body: JSON.stringify(newReply),
-      headers: { 'Content-Type': 'application/json' }
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${currentUser.token}` 
+      },
     })
 
     const json = await response.json()
@@ -358,6 +445,11 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
       console.log(json.error.message)
+
+      if(!isAuthenticated()) {
+        openAuthModal(json.error.message)
+      }
+
     }
 
     if(response.ok) {

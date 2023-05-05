@@ -1,7 +1,10 @@
 const express = require('express')
 const { createReply, updateReply, deleteReply } = require('../controllers/replyController')
+const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()
+
+router.use(requireAuth)
 
 // CREATE a reply
 router.post('/:commentId', createReply)

@@ -6,11 +6,14 @@ const {
   updateComment,
   deleteComment
 } = require('../controllers/commentController')
+const requireAuth = require('../middleware/requireAuth')
 
 const router = express.Router()
 
 // READ all comments
 router.get('/', getComments)
+
+router.use(requireAuth)
 
 // READ a comment
 router.get('/:id', getComment)

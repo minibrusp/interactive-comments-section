@@ -33,6 +33,7 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
 
         <CommentContent 
           isEditing={isEditing}
+          content={content}
           currentContent={currentContent}
           setCurrentContent={setCurrentContent}
           replyingTo={replyingTo}
@@ -52,6 +53,7 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
           id={id}
           commentThreadId={commentThreadId}
           replyingTo={replyingTo}
+          content={content}
           currentContent={currentContent}
           setCurrentContent={setCurrentContent}
           isCurrent={isCurrent}
