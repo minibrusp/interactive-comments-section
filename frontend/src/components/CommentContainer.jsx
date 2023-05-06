@@ -16,7 +16,8 @@ const CommentContainer = () => {
       try {
         setIsLoading(true)
         setError(null)
-        const response = await fetch('http://localhost:4001/api/comments/')
+        // const response = await fetch('http://localhost:4001/api/comments/')
+        const response = await fetch('https://interactive-comments-section-api.onrender.com/api/comments')
         const json = await response.json()
         if(response.ok) {
           setIsLoading(false)

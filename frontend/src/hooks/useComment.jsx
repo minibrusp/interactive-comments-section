@@ -20,6 +20,8 @@ export default function useComment() {
   const [ error, setError ] = useState(null)
   const [ emptyFields, setEmptyFields ] = useState([])
 
+  const url = 'https://interactive-comments-section-api.onrender.com/api/'
+
   const createComment = async (content) => {
 
     setIsLoading(true)
@@ -32,7 +34,7 @@ export default function useComment() {
       "userId": currentUser.id
     }
 
-    const response = await fetch('http://localhost:4001/api/comments/', {
+    const response = await fetch(`${url}comments/`, {
       method: 'POST',
       body: JSON.stringify(coms),
       headers: { 
@@ -71,7 +73,7 @@ export default function useComment() {
     setError(null)
     setEmptyFields([])
 
-    const response = await fetch(`http://localhost:4001/api/comments/${id}`, {
+    const response = await fetch(`${url}comments/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ content: newContent }),
       headers: { 
@@ -109,7 +111,7 @@ export default function useComment() {
     setError(null)
     setEmptyFields([])
 
-    const response = await fetch(`http://localhost:4001/api/comments/${id}`, {
+    const response = await fetch(`${url}comments/${id}`, {
       method: 'DELETE',
       headers: { 
         'Content-Type': 'application/json',
@@ -148,7 +150,7 @@ export default function useComment() {
 
     const newScore = score + 1
 
-    const response = await fetch(`http://localhost:4001/api/comments/${id}`, {
+    const response = await fetch(`${url}comments/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ score: newScore }),
       headers: { 
@@ -189,7 +191,7 @@ export default function useComment() {
 
     const newScore = score - 1
 
-    const response = await fetch(`http://localhost:4001/api/comments/${id}`, {
+    const response = await fetch(`${url}comments/${id}`, {
       method: 'PATCH',
       body: JSON.stringify({ score: newScore }),
       headers: { 
@@ -246,7 +248,7 @@ export default function useComment() {
       user: currentUser.id
     }
 
-    const response = await fetch(`http://localhost:4001/api/replies/${id}`, {
+    const response = await fetch(`${url}replies/${id}`, {
       method: 'POST',
       body: JSON.stringify(newReply),
       headers: { 
@@ -285,7 +287,7 @@ export default function useComment() {
     setError(null)
     setEmptyFields([])
 
-    const response = await fetch(`http://localhost:4001/api/replies/${replyId}`, {
+    const response = await fetch(`${url}replies/${replyId}`, {
       method: 'PATCH',
       body: JSON.stringify({ content: content }),
       headers: { 
@@ -327,7 +329,7 @@ export default function useComment() {
     setError(null)
     setEmptyFields([])
 
-    const response = await fetch(`http://localhost:4001/api/replies/${id}/${replyId}`, {
+    const response = await fetch(`${url}replies/${id}/${replyId}`, {
       method: 'DELETE',
       headers: { 
         'Content-Type': 'application/json',
@@ -363,7 +365,7 @@ export default function useComment() {
     setError(null)
     setEmptyFields([])
 
-    const response = await fetch(`http://localhost:4001/api/replies/${replyId}`, {
+    const response = await fetch(`${url}replies/${replyId}`, {
       method: 'PATCH',
       body: JSON.stringify({ score: score + 1 }),
       headers: { 
@@ -401,7 +403,7 @@ export default function useComment() {
     setError(null)
     setEmptyFields([])
 
-    const response = await fetch(`http://localhost:4001/api/replies/${replyId}`, {
+    const response = await fetch(`${url}replies/${replyId}`, {
       method: 'PATCH',
       body: JSON.stringify({ score: score - 1 }),
       headers: { 
@@ -456,7 +458,7 @@ export default function useComment() {
       user: currentUser.id
     }
 
-    const response = await fetch(`http://localhost:4001/api/replies/${id}`, {
+    const response = await fetch(`${url}replies/${id}`, {
       method: 'POST',
       body: JSON.stringify(newReply),
       headers: { 

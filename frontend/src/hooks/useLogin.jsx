@@ -10,6 +10,8 @@ export default function useLogin() {
   const [ isLoading, setIsLoading ] = useState(null)
   const [ emptyFields, setEmptyFields ] = useState([])
 
+  const url = 'https://interactive-comments-section-api.onrender.com/api/'
+
   const login = async (username, password) => {
     setIsLoading(true)
     setError(null)
@@ -19,7 +21,7 @@ export default function useLogin() {
     data.append('username', username)
     data.append('password', password)
 
-    const response = await fetch('http://localhost:4001/api/users/login', {
+    const response = await fetch(`${url}users/login`, {
       method: 'POST',
       body: data,
     })

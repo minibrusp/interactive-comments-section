@@ -11,6 +11,8 @@ export default function useSignup() {
   const [ isLoading, setIsLoading ] = useState(null)
   const [ emptyFields, setEmptyFields ] = useState([])
 
+  const url = 'https://interactive-comments-section-api.onrender.com/api/'
+
   const signup = async (username, password, currentFile) => {
     setIsLoading(true)
     setError(null)
@@ -21,7 +23,7 @@ export default function useSignup() {
     data.append('password', password)
     data.append('avatar', currentFile)
 
-    const response = await fetch('http://localhost:4001/api/users/register', {
+    const response = await fetch(`${url}users/register`, {
       method: 'POST',
       body: data,
     })
