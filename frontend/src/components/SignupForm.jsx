@@ -64,7 +64,7 @@ export default function SignupForm() {
 
         <label 
           htmlFor="avatar"
-          className={`font-rubik text-neutral-white h-[100px] w-[100px] bg-primary-moderate-blue rounded-full cursor-pointer flex flex-row justify-center items-center shadow-md border ${ emptyFields?.includes('avatar') ? 'border-primary-soft-red' : '' }`} 
+          className={`font-rubik text-neutral-white h-[100px] w-[100px] ${!filePreview ? 'bg-primary-moderate-blue' : '' } rounded-full cursor-pointer flex flex-row justify-center items-center shadow-md border ${ emptyFields?.includes('avatar') ? 'border-primary-soft-red' : '' }`} 
         >
           { !filePreview && <FaUpload className="text-2xl" /> }
           

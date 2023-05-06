@@ -47,7 +47,6 @@ export default function useComment() {
       setIsLoading(false)
       setError(json.error.message)
 
-      console.log(json.error.message)
 
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -86,7 +85,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
       
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -124,7 +122,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
       
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -165,7 +162,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
 
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -207,7 +203,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
 
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -265,7 +260,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
 
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -305,7 +299,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
 
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -347,7 +340,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
 
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -385,7 +377,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
 
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -424,7 +415,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
 
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)
@@ -480,7 +470,6 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      console.log(json.error.message)
 
       if(!isAuthenticated()) {
         openAuthModal(json.error.message)

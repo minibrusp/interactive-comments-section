@@ -8,12 +8,14 @@ import RepliesContainer from "./RepliesContainer";
 const CommentContainer = () => {
   const { comments, dispatch } = useCommentContext()
   const [ isLoading, setIsLoading ] = useState(false)
+  const [ error, setError ] = useState(null)
 
   
   useEffect(() => {
     const fetchComments = async () => {
       try {
         setIsLoading(true)
+        setError(null)
         const response = await fetch('http://localhost:4001/api/comments/')
         const json = await response.json()
         if(response.ok) {
@@ -23,7 +25,7 @@ const CommentContainer = () => {
         }
       } catch(err) {
         setIsLoading(false)
-        throw Error("Could not connect to the API")
+        throw Error("Could not connect to the server, please try again")
       }
 
       
@@ -31,13 +33,14 @@ const CommentContainer = () => {
     }
 
     fetchComments()
-      .catch(error => console.log(error))
+      .catch(error => setError(error))
     }, [dispatch])
 
-  
+  console.log(error?.message)
 
   return (
     <div className="comment__container m-4 mb-4 relative overflow-y-hidden max-w-[733px] mx-auto">
+      { error && <div className="text-center text-primary-soft-red">{error?.message}</div>}
       { comments &&
           comments.map((comment) => (
             <div key={comment._id}>

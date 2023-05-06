@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom"
 import Header from "../components/Header"
 
 import useUserContext from "../hooks/useUserContext"
+import Footer from "../components/Footer"
 
 
 export default function Root() {
@@ -11,6 +12,7 @@ export default function Root() {
     <>
       <Header currentUser={currentUser} dispatch={dispatch} />
       <Outlet />
+      <Footer />
     </>
   ) 
 }
