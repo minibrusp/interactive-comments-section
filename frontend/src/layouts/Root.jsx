@@ -3,6 +3,7 @@ import Header from "../components/Header"
 
 import useUserContext from "../hooks/useUserContext"
 
+
 export default function Root() {
   const { currentUser, dispatch } = useUserContext()
 

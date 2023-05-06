@@ -11,6 +11,8 @@ import useAuthModalContext from "../hooks/useAuthModalContext"
 import useModalContext from "../hooks/useModalContext"
 
 
+
+
 function Home() {
   const { isModalOpen } = useModalContext() 
   const { isAuthModalOpen } = useAuthModalContext()

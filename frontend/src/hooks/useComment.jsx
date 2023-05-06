@@ -1,8 +1,14 @@
 import { useState } from "react"
+import { toast } from 'react-toastify';
 
 import useUserContext from "./useUserContext"
 import useCommentContext from "./useCommentContext"
 import useAuthModal from "./useAuthModal"
+
+
+import { FaEdit, FaSave, FaTrashAlt } from "react-icons/fa"
+import { BiDownvote, BiUpvote } from "react-icons/bi"
+
 
 
 export default function useComment() {
@@ -52,6 +58,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'CREATE_COMMENT', payload: json})
       setIsLoading(false)
+      toast.success('comment successfully created', {
+        icon: <FaSave />,
+        autoClose: 3000
+      });
     }
     
 
@@ -89,6 +99,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'EDIT_COMMENT', payload: { id: json._id, content: json.content}})
       setIsLoading(false)
+      toast.success('comment successfully updated', {
+        icon: <FaEdit />,
+        autoClose: 3000
+      });
     }
 
   }
@@ -124,6 +138,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'DELETE_COMMENT', payload: { id: json._id } })
       setIsLoading(false)
+      toast.success('comment successfully deleted', {
+        icon: <FaTrashAlt />,
+        autoClose: 3000
+      });
     }
 
   }
@@ -162,6 +180,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'UPVOTE_COMMENT', payload: { id: json._id } })
       setIsLoading(false)
+      toast.success('comment successfully upvoted !!!', {
+        icon: <BiUpvote />,
+        autoClose: 3000
+      });
     }
 
   }
@@ -201,6 +223,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'DOWNVOTE_COMMENT', payload: { id: json._id } })
       setIsLoading(false)
+      toast.success('comment successfully downvoted', {
+        icon: <BiDownvote />,
+        autoClose: 3000
+      });
     }
 
   }
@@ -256,6 +282,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'REPLY_COMMENT', payload: { id: id, reply: json} })
       setIsLoading(false)
+      toast.success('reply successfully created', {
+        icon: <FaSave />,
+        autoClose: 3000
+      });
     }
 
 
@@ -293,6 +323,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'EDIT_REPLY', payload: { id: id, content: json.content, replyId: json._id } })
       setIsLoading(false)
+      toast.success('reply successfully updated', {
+        icon: <FaEdit />,
+        autoClose: 3000
+      });
     }
 
   }
@@ -331,6 +365,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'DELETE_REPLY', payload: { id: id, replyId: json._id } })
       setIsLoading(false)
+      toast.success('reply successfully deleted', {
+        icon: <FaTrashAlt />,
+        autoClose: 3000
+      });
     }
 
   }
@@ -367,6 +405,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'UPVOTE_REPLY', payload: { id: id, replyId: json._id } })
       setIsLoading(false)
+      toast.success('reply successfully upvoted !!!', {
+        icon: <BiUpvote />,
+        autoClose: 3000
+      });
     }
 
   }
@@ -403,6 +445,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'DOWNVOTE_REPLY', payload: { id: id, replyId: json._id } })
       setIsLoading(false)
+      toast.success('reply successfully downvoted', {
+        icon: <BiDownvote />,
+        autoClose: 3000
+      });
     }
 
   }
@@ -456,6 +502,10 @@ export default function useComment() {
       console.log(json)
       dispatch({ type: 'REPLY_REPLY', payload: { id: id, reply: json} })
       setIsLoading(false)
+      toast.success('reply successfully created', {
+        icon: <FaSave />,
+        autoClose: 3000
+      });
     }
 
   }

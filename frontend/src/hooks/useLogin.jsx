@@ -1,6 +1,9 @@
 import { useState } from "react"
 import useUserContext from "./useUserContext"
 
+import { toast } from "react-toastify"
+import { BiCheckShield, BiShieldX } from "react-icons/bi";
+
 export default function useLogin() {
   const { dispatch } = useUserContext()
   const [ error, setError ] = useState(null)
@@ -28,6 +31,11 @@ export default function useLogin() {
       setError(json.error.message)
       setEmptyFields(json.error.emptyFields)
 
+      toast.error('Login failed', {
+        icon: <BiShieldX />,
+        autoClose: 3000,
+      });
+
       return false
     }
 
@@ -39,6 +47,11 @@ export default function useLogin() {
       dispatch({type: 'USER_LOGIN', payload: json})
 
       setIsLoading(false)
+
+      toast.success('Login success', {
+        icon: <BiCheckShield />,
+        autoClose: 3000
+      });
 
       return true
     }

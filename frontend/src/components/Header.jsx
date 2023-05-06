@@ -3,6 +3,10 @@ import useUserContext from "../hooks/useUserContext";
 import UserAvatar from "./UserAvatar";
 import { useState } from "react";
 
+
+import { toast } from "react-toastify"
+import { BiShield } from "react-icons/bi";
+
 // assets 
 import logo from '../assets/images/favicon.png'
 
@@ -19,6 +23,10 @@ export default function Header() {
     setShowLogoutBtn(false)
     dispatch({ type: 'USER_LOGOUT' })
     localStorage.removeItem('user');
+    toast.success('Logout Success', {
+      icon: <BiShield />,
+      autoClose: 3000
+    });
   }
   
   return (
