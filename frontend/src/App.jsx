@@ -43,7 +43,7 @@ function App() {
   return (
     <>
       <ToastContainer 
-        className="w-[unset] font-rubik md:w-[unset]"
+        className="w-[unset] p-4 font-rubik md:p-[unset]"
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}

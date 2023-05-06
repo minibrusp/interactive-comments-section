@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 // Components
 import CommentForm from './CommentForm'
@@ -21,6 +21,10 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
   const [currentContent, setCurrentContent] = useState(content)
   const isCurrent = currentUser?.username === user?.username ? true : false
   const [textAreaFirstClick, setTextAreaFirstClick] = useState(true)
+
+  useEffect(() => {
+    setCurrentContent(content)
+  }, [content])
 
   return (
     <>

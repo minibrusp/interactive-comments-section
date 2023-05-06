@@ -32,26 +32,18 @@ export default function CommentFooter({
   
   const handleEditClick = () => {
 
-    // if(!currentUser.token) {
-    //   console.log(isAuthModalOpen)
-    //   setIsAuthModalOpen(true)
-    //   return
-    // }
-
-
     setIsEditing(true)
     if(replyingTo) {
-      console.log(replyingTo)
       setCurrentContent(prevState => `@${replyingTo} ` + prevState)
     }
   }
 
   const handleUpdateClick = () => {
     if(replyingTo) {
-      console.log('Replying Toooooo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
-      console.log('commentThreadId: ', commentThreadId)
-      console.log('id: ', id)
-      console.log('currentContent: ', currentContent)
+      // console.log('Replying Toooooo ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
+      // console.log('commentThreadId: ', commentThreadId)
+      // console.log('id: ', id)
+      // console.log('currentContent: ', currentContent)
       
       setCurrentContent(prevState => prevState.replace(`@${replyingTo} `, ''))
       editReply(commentThreadId, id, currentContent)
@@ -68,13 +60,6 @@ export default function CommentFooter({
 
   const handleDeleteComment = () => {
 
-    // if(!currentUser.token) {
-    //   console.log(isAuthModalOpen)
-    //   setIsAuthModalOpen(true)
-    //   return
-    // }
-
-
     if(replyingTo) {
       openModal(commentThreadId, id)
     }
@@ -86,7 +71,6 @@ export default function CommentFooter({
 
   return (
     <>
-      {/* { error && <div>{error}</div>} */}
       <div className="comment__footer grid-in-replybtn self-center flex flex-row gap-4 justify-self-end md:self-start">
 
 
