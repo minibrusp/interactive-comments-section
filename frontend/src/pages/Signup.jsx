@@ -1,8 +1,21 @@
+import { useEffect } from "react"
+import { useNavigate } from "react-router-dom"
 
 import FormHeading from "../components/FormHeading";
 import SignupForm from "../components/SignupForm";
 
+import useAuthModal from '../hooks/useAuthModal'
+
 export default function Signup() {
+
+  const { isAuthenticated } = useAuthModal()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    isAuthenticated() 
+      ? navigate('/')
+      : null
+  }, [ isAuthenticated, navigate ])
 
 
   return (
