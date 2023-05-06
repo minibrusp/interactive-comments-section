@@ -2,6 +2,7 @@ import {
   createBrowserRouter,
   RouterProvider
 } from "react-router-dom"
+import { ToastContainer } from 'react-toastify';
 
 // layouts 
 import Root from "./layouts/Root"
@@ -10,8 +11,9 @@ import Root from "./layouts/Root"
 import Home from "./pages/Home"
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
+import Page404 from "./pages/Page404"
 
-import { ToastContainer } from 'react-toastify';
+
 import 'react-toastify/dist/ReactToastify.css';
 
 
@@ -33,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />
+      },
+      {
+        path: "*",
+        element: <Page404 />
       }
     ]
   }

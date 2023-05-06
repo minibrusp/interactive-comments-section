@@ -27,16 +27,12 @@ const CommentContainer = () => {
         setIsLoading(false)
         throw Error("Could not connect to the server, please try again")
       }
-
-      
-
     }
 
     fetchComments()
       .catch(error => setError(error))
-    }, [dispatch])
 
-  console.log(error?.message)
+  }, [dispatch])
 
   return (
     <div className="comment__container m-4 mb-4 relative overflow-y-hidden max-w-[733px] mx-auto">
