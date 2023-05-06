@@ -1,4 +1,4 @@
-import { CommentContext } from "../context/commentContext"
+import { CommentContext } from "../context/CommentContext"
 import { useContext } from "react"
 
 export default function useCommentContext() {
