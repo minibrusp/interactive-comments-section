@@ -12,9 +12,6 @@ import CommentVotes from './CommentVotes'
 import useUserContext from '../hooks/useUserContext'
 import CommentFooter from './CommentFooter'
 
-import useComment from '../hooks/useComment'
-
-
 export default function Comment({id, commentThreadId, content, createdAt, score, user, replyingTo}) {
   const { currentUser } = useUserContext()
 

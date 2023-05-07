@@ -1,13 +1,6 @@
 /* eslint-disable react/prop-types */
 
-import { useEffect } from "react"
-
-
 export default function CommentContent({isLoading, isEditing, content, currentContent, setCurrentContent, replyingTo, textAreaFirstClick, setTextAreaFirstClick}) {
-
-  useEffect(() => {
-    console.log('COmment COntent Rendered');
-  }, [content])
 
   const handleTextAreaFirstClick = (e) => {
     if(textAreaFirstClick) {

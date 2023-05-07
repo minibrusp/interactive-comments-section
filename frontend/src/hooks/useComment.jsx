@@ -70,11 +70,18 @@ export default function useComment() {
 
   }
 
-  const changeComment = async (id, newContent, setIsEditing) => {
+  const changeComment = async (id, newContent, setIsEditing, setTextAreaLoader) => {
 
     setIsLoading(true)
     setError(null)
     setEmptyFields([])
+
+    if(newContent === '') {
+      setIsLoading(false)
+      setTextAreaLoader(false)
+      setError('Please fill in your comment')
+      return
+    }
 
     const response = await fetch(`${url}comments/${id}`, {
       method: 'PATCH',
@@ -90,7 +97,8 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
-      
+      setTextAreaLoader(false)
+
       if(!isAuthenticated()) {
         setIsEditing(false)
         openAuthModal(json.error.message)
@@ -101,6 +109,7 @@ export default function useComment() {
     if(response.ok) {
       dispatch({ type: 'EDIT_COMMENT', payload: { id: json._id, content: json.content}})
       setIsLoading(false)
+      setTextAreaLoader(false)
       toast.success('comment successfully updated', {
         icon: <FaEdit />,
         autoClose: 3000
@@ -289,11 +298,21 @@ export default function useComment() {
 
   }
   
-  const editReply = async (id, replyId, content, setIsEditing) => {
+  const editReply = async (id, replyId, content, setIsEditing, setTextAreaLoader) => {
 
     setIsLoading(true)
     setError(null)
     setEmptyFields([])
+
+    if(content === '') {
+      setIsLoading(false)
+      setTextAreaLoader(false)
+      setEmptyFields(['content'])
+      setError('Please fill in your comment')
+      return
+    }
+
+
 
     const response = await fetch(`${url}replies/${replyId}`, {
       method: 'PATCH',
@@ -309,6 +328,7 @@ export default function useComment() {
     if(!response.ok) {
       setIsLoading(false)
       setError(json.error.message)
+      setTextAreaLoader(false)
 
       if(!isAuthenticated()) {
         setIsEditing(false)
@@ -320,6 +340,7 @@ export default function useComment() {
     if(response.ok) {
       dispatch({ type: 'EDIT_REPLY', payload: { id: id, content: json.content, replyId: json._id } })
       setIsLoading(false)
+      setTextAreaLoader(false)
       toast.success('reply successfully updated', {
         icon: <FaEdit />,
         autoClose: 3000

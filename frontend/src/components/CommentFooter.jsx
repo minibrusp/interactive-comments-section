@@ -35,7 +35,6 @@ export default function CommentFooter({
 
     setIsEditing(false)
     setTextAreaFirstClick(true)
-    setTextAreaLoader(false)
     setCurrentContent(content)
 
   }, [isLoading])
@@ -61,11 +60,11 @@ export default function CommentFooter({
       // console.log('id: ', id)
       // console.log('currentContent: ', currentContent)
       setCurrentContent(prevState => prevState.replace(`@${replyingTo} `, ''))
-      editReply(commentThreadId, id, currentContent, setIsEditing)
+      editReply(commentThreadId, id, currentContent, setIsEditing, setTextAreaLoader)
     }
     if(!replyingTo) {
       setCurrentContent(prevState => prevState.replace(`@${replyingTo} `, ''))
-      changeComment(id, currentContent, setIsEditing)
+      changeComment(id, currentContent, setIsEditing, setTextAreaLoader)
     }
     
     // setIsEditing(false)
