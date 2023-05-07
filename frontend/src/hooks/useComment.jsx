@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import useUserContext from "./useUserContext"
 import useCommentContext from "./useCommentContext"
 import useAuthModal from "./useAuthModal"
+import useModalContext from "./useModalContext";
 
 
 import { FaEdit, FaSave, FaTrashAlt } from "react-icons/fa"
@@ -19,10 +20,11 @@ export default function useComment() {
   const [ isLoading, setIsLoading] = useState(false)
   const [ error, setError ] = useState(null)
   const [ emptyFields, setEmptyFields ] = useState([])
+  const { setIsModalOpen } = useModalContext()
 
   const url = import.meta.env.VITE_APP_API_ENDPOINT
 
-  const createComment = async (content) => {
+  const createComment = async (content, setComment) => {
 
     setIsLoading(true)
     setError(null)
@@ -58,6 +60,7 @@ export default function useComment() {
     if(response.ok) {
       dispatch({ type: 'CREATE_COMMENT', payload: json})
       setIsLoading(false)
+      setComment('')
       toast.success('comment successfully created', {
         icon: <FaSave />,
         autoClose: 3000
@@ -67,7 +70,7 @@ export default function useComment() {
 
   }
 
-  const changeComment = async (id, newContent) => {
+  const changeComment = async (id, newContent, setIsEditing) => {
 
     setIsLoading(true)
     setError(null)
@@ -89,6 +92,7 @@ export default function useComment() {
       setError(json.error.message)
       
       if(!isAuthenticated()) {
+        setIsEditing(false)
         openAuthModal(json.error.message)
       }
 
@@ -134,10 +138,12 @@ export default function useComment() {
     if(response.ok) {
       dispatch({ type: 'DELETE_COMMENT', payload: { id: json._id } })
       setIsLoading(false)
+      setIsModalOpen(false)
       toast.success('comment successfully deleted', {
         icon: <FaTrashAlt />,
         autoClose: 3000
       });
+      
     }
 
   }
@@ -225,7 +231,7 @@ export default function useComment() {
 
   // REPLIES 
 
-  const replyToComment = async (id, content, commentThreadUserId) => {
+  const replyToComment = async (id, content, commentThreadUserId, setIsReplying, setComment) => {
 
 
     // console.log('REPLY TO COMMENT ~~~~~~~~~~~~~~~~')
@@ -272,6 +278,8 @@ export default function useComment() {
     if(response.ok) {
       dispatch({ type: 'REPLY_COMMENT', payload: { id: id, reply: json} })
       setIsLoading(false)
+      setIsReplying(false)
+      setComment('')
       toast.success('reply successfully created', {
         icon: <FaSave />,
         autoClose: 3000
@@ -281,7 +289,7 @@ export default function useComment() {
 
   }
   
-  const editReply = async (id, replyId, content) => {
+  const editReply = async (id, replyId, content, setIsEditing) => {
 
     setIsLoading(true)
     setError(null)
@@ -303,6 +311,7 @@ export default function useComment() {
       setError(json.error.message)
 
       if(!isAuthenticated()) {
+        setIsEditing(false)
         openAuthModal(json.error.message)
       }
 
@@ -321,8 +330,8 @@ export default function useComment() {
 
   const deleteReply = async (id, replyId) => {
 
-    console.log('ID: ', id)
-    console.log('replyId: ', replyId)
+    // console.log('ID: ', id)
+    // console.log('replyId: ', replyId)
 
 
     setIsLoading(true)
@@ -351,6 +360,7 @@ export default function useComment() {
     if(response.ok) {
       dispatch({ type: 'DELETE_REPLY', payload: { id: id, replyId: json._id } })
       setIsLoading(false)
+      setIsModalOpen(false)
       toast.success('reply successfully deleted', {
         icon: <FaTrashAlt />,
         autoClose: 3000
@@ -435,7 +445,7 @@ export default function useComment() {
 
   }
 
-  const replyToReply = async (id, content, replyingToID) => {
+  const replyToReply = async (id, content, replyingToID, setIsReplying, setComment) => {
 
     setIsLoading(true)
     setError(null)
@@ -482,6 +492,8 @@ export default function useComment() {
     if(response.ok) {
       dispatch({ type: 'REPLY_REPLY', payload: { id: id, reply: json} })
       setIsLoading(false)
+      setIsReplying(false) 
+      setComment('')
       toast.success('reply successfully created', {
         icon: <FaSave />,
         autoClose: 3000

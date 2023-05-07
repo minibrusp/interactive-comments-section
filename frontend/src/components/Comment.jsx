@@ -12,6 +12,8 @@ import CommentVotes from './CommentVotes'
 import useUserContext from '../hooks/useUserContext'
 import CommentFooter from './CommentFooter'
 
+import useComment from '../hooks/useComment'
+
 
 export default function Comment({id, commentThreadId, content, createdAt, score, user, replyingTo}) {
   const { currentUser } = useUserContext()
@@ -19,6 +21,7 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
   const [isReplying, setIsReplying] = useState(false)
   const [isEditing, setIsEditing] = useState(false)
   const [currentContent, setCurrentContent] = useState(content)
+  const [ textAreaLoader, setTextAreaLoader ] = useState(false)
   const isCurrent = currentUser?.username === user?.username ? true : false
   const [textAreaFirstClick, setTextAreaFirstClick] = useState(true)
 
@@ -35,7 +38,8 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
           createdAt={createdAt}
         />
 
-        <CommentContent 
+        <CommentContent
+          isLoading={textAreaLoader} 
           isEditing={isEditing}
           content={content}
           currentContent={currentContent}
@@ -65,6 +69,7 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
           setIsEditing={setIsEditing}
           setIsReplying={setIsReplying}
           setTextAreaFirstClick={setTextAreaFirstClick}
+          setTextAreaLoader={setTextAreaLoader}
         />
         
         
@@ -74,7 +79,13 @@ export default function Comment({id, commentThreadId, content, createdAt, score,
 
       {
         isReplying && (
-          <CommentForm commentThreadId={commentThreadId} recipientId={id} btnText="reply" commentThreadUserId={user?._id} replyingTo={user?.username} setIsReplying={setIsReplying} />
+          <CommentForm 
+            commentThreadId={commentThreadId} 
+            recipientId={id} btnText="reply" 
+            commentThreadUserId={user?._id} 
+            replyingTo={user?.username} 
+            setIsReplying={setIsReplying}
+          />
         )
       }
 

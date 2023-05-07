@@ -1,9 +1,7 @@
-import useComment from './useComment'
 import useModalContext from './useModalContext'
 
 export default function useModal() {
-  const { setIsModalOpen, setTargetComment, setTargetReply, targetReply } = useModalContext()
-  const { deleteComment, deleteReply } = useComment()
+  const { setIsModalOpen, setTargetComment, setTargetReply } = useModalContext()
 
   const openModal = (id, replyId = null) => {
     setIsModalOpen(true)
@@ -21,17 +19,6 @@ export default function useModal() {
       setTargetReply(null)
     }
   }
-  
-  const modalDeleteConfirm = (id) => {
-    setIsModalOpen(false)
-    if(!targetReply) {
-      deleteComment(id)
-    } else {
-      deleteReply(id, targetReply)
-      setTargetReply(null)
-    }
-    setTargetComment(null)
-  }
 
-  return { openModal, closeModal, modalDeleteConfirm }
+  return { openModal, closeModal }
 }
