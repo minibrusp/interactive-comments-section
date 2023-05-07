@@ -10,7 +10,7 @@ export default function useLogin() {
   const [ isLoading, setIsLoading ] = useState(null)
   const [ emptyFields, setEmptyFields ] = useState([])
 
-  const url = 'https://interactive-comments-section-api.onrender.com/api/'
+  const url = import.meta.env.VITE_APP_API_ENDPOINT
 
   const login = async (username, password) => {
     setIsLoading(true)

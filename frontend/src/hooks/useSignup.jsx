@@ -11,7 +11,7 @@ export default function useSignup() {
   const [ isLoading, setIsLoading ] = useState(null)
   const [ emptyFields, setEmptyFields ] = useState([])
 
-  const url = 'https://interactive-comments-section-api.onrender.com/api/'
+  const url = import.meta.env.VITE_APP_API_ENDPOINT
 
   const signup = async (username, password, currentFile) => {
     setIsLoading(true)
