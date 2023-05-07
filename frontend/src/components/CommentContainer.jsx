@@ -25,7 +25,9 @@ const CommentContainer = () => {
         }
       } catch(err) {
         setIsLoading(false)
-        throw Error("Could not connect to the server, please try again")
+        throw Error(
+          "server automatically spun down after 15 minutes of inactivity. When a new request comes in, It will spins it up again after 30secs."
+        )
       }
     }
 
