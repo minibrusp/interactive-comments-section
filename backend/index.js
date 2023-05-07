@@ -6,6 +6,7 @@ const commentRoutes = require("./routes/comments")
 const userRoutes = require("./routes/users")
 const replyRoutes = require("./routes/reply")
 const fileUpload = require("express-fileupload")
+const path = require('path')
 
 const app = express()
 
