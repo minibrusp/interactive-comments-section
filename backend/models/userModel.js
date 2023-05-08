@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const validator = require('validator')
 const path = require('path')
+const { uploadImageCloudinary } = require('../cloudinary/utils')
 
 const Schema = mongoose.Schema
 
@@ -45,20 +46,14 @@ userSchema.statics.signup = async function(req, res, username, password, avatar)
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(password, salt)
 
-  const newAvatarName = `${new Date().toISOString().replace(/[-:.]/g,"")}-${avatar.name}`
+  const result = await uploadImageCloudinary(avatar.tempFilePath)
 
-  const filepath = path.join( __dirname, '../public/images/avatar', newAvatarName)
-  const protocol = req.protocol
-  const host = req.get('host')
-
-  await avatar.mv(filepath, (err) => {
-    if(err) return res.status(500).json({status: "error", message: err})
-  })
+  // console.log(result.secure_url)
 
   const user = await this.create({ 
     username: username.replace(" ", ""),
     password: hash,
-    avatar: `${protocol}://${host}/images/avatar/${newAvatarName}`,
+    avatar: result.secure_url,
   })
 
   return user

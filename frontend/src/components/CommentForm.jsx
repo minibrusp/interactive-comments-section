@@ -65,7 +65,7 @@ export default function CommentForm({
           value={comment}
         />
         <div className='comment__avatar grid-in-profile self-center'>
-          <img className='h-8 w-8' src={currentUser?.avatar} alt="user image avatar" />
+          <img className='h-8 w-8 rounded-full' src={currentUser?.avatar} alt="user image avatar" />
         </div>
         
         <button 

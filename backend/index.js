@@ -1,12 +1,12 @@
-require('dotenv').config()
+require("dotenv").config()
 const express = require("express")
 const mongoose = require("mongoose")
-const cors = require('cors')
+const cors = require("cors")
 const commentRoutes = require("./routes/comments")
 const userRoutes = require("./routes/users")
 const replyRoutes = require("./routes/reply")
 const fileUpload = require("express-fileupload")
-const path = require('path')
+const path = require("path")
 
 const app = express()
 
@@ -15,7 +15,6 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')));
-// app.use(express.static('public'))
 app.use(fileUpload({
   createParentPath: true,
   limits: { fileSize: 5 * 1024 * 1024 },
@@ -23,6 +22,9 @@ app.use(fileUpload({
   uriDecodeFileNames: true,
   safeFileNames: true,
   preserveExtension: 4,
+  useTempFiles: true,
+  tempFileDir: '/tmp/',
+  // debug: true,
   limitHandler: (req, res, next) => {
     return res.status(400).json({message: "Avatar's file size limit has been reached"})
   }
