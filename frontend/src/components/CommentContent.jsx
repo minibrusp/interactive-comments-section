@@ -13,7 +13,7 @@ export default function CommentContent({isLoading, isEditing, content, currentCo
     <div className="comment__content mb-4 grid-in-content md:m-0">
           {
             !isEditing && (
-              <p className='comment__content__text'>
+              <p className='comment__content__text break-all'>
                 {
                   replyingTo && (
                     <span className=' text-primary-moderate-blue font-medium'>{`@${replyingTo} `}</span>
